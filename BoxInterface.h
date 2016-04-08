@@ -13,4 +13,6 @@ public:
 
 };  // end BoxInterface
 
+// This is a test
+
 #endif
