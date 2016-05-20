@@ -20,7 +20,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="runningback.h">
+    <ClInclude Include="player.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
