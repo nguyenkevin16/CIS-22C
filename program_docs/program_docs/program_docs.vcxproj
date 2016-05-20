@@ -69,6 +69,9 @@
   <ItemGroup>
     <ClInclude Include="player.h" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="RB_stats_2015.txt" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
