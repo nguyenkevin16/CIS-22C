@@ -26,7 +26,13 @@
     <ClInclude Include="player_IO.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="BST.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="hash.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="rb.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

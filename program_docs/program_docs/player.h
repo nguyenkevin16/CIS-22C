@@ -1,9 +1,12 @@
-/* player.h */
+/*
+player.h
+*/
 
 #ifndef PLAYER_H
 #define PLAYER_H
 #include <string>
 #include <iostream>
+#include <iomanip>
 
 class player {
 	int ID;
@@ -19,32 +22,6 @@ public:
 	// MUTATORS
 	void set_ID(const int& i) { ID = i; }
 	void set_name(const std::string& s) { name = s; }
+	
 };
-
-class rb : public player {
-	double yards, TDs, ppg;
-public:
-	rb() : player(0, ""), yards(0), TDs(0), ppg(0) {}
-	rb(int id, std::string name) : player(id, name), yards(0), TDs(0), ppg(0) {}
-	rb(int id, std::string name, double yards, double tds, double ppg) 
-		: player(id, name), yards(yards), TDs(tds), ppg(ppg) {}
-
-	// ACCESSORS
-	double get_yards() const { return yards; }
-	double get_TDs() const { return TDs; }
-	double get_ppg() const { return ppg; }
-
-	// MUTATORS
-	void set_yards(const double& d) { yards = d; }
-	void set_TDs(const double& d) { TDs = d; }
-	void set_ppg(const double& d) { ppg = d; }
-
-	// METHODS
-	void print() const;
-};
-
-void rb::print() const {
-	std::cout << get_ID() << " " << get_name() << " " << get_yards() << " " << get_TDs() << " " << get_ppg();
-}
-
 #endif
