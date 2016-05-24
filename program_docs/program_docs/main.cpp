@@ -22,6 +22,49 @@ int main() {
 	ifstream fin(FILE_INPUT);
 	checkFileOpen(fin, FILE_INPUT);
 
+	string buffer, name;
+	int ID, count = 0;
+	double yards, TDs, ppg, temp;
+
+	rb* rb_arr[40];
+	getline(fin, buffer);
+
+	// Start line-by-line loop
+		fin >> ID;
+
+		cout << ID << endl;
+
+		fin >> buffer >> name >> buffer;
+		name += " " + buffer;
+
+		cout << name << endl;
+
+		fin >> buffer >> buffer >> buffer;
+
+		fin >> yards >> buffer >> buffer;
+
+		cout << yards << endl;
+		cout << buffer << endl;
+
+		/*
+		fin >> buffer >> buffer;
+
+		fin >> temp;
+		yards += temp;
+
+		fin >> temp;
+		TDs += temp;
+
+		fin >> buffer >> ppg;
+		*/
+
+		//rb_arr[count] = new rb(ID, name, yards, TDs, ppg);
+		//count++;
+	// End line-by-line loop
+
+	//rb_arr[0]->print();
+	//cout << endl << endl;
+
 	fin.close();
 
 	system("pause");
