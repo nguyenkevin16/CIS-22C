@@ -5,6 +5,7 @@ player.h
 #ifndef PLAYER_H
 #define PLAYER_H
 #include <string>
+#include <iostream>
 
 class player {
 	int ID;
@@ -39,6 +40,13 @@ public:
 	void set_yards(const double& d) { yards = d; }
 	void set_TDs(const double& d) { TDs = d; }
 	void set_ppg(const double& d) { ppg = d; }
+
+	// METHODS
+	void print() const;
 };
+
+void rb::print() const {
+	std::cout << get_ID() << " " << get_name() << " " << get_yards() << " " << get_TDs() << " " << get_ppg();
+}
 
 #endif
