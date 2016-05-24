@@ -12,6 +12,7 @@ class rb_list {
 public:
 	rb_list() { for (int i = 0; i < 50; i++) rb_arr[i] = nullptr; }
 
+	rb* get_arr(const int& idx) const { return rb_arr[idx]; }
 	void read_file(std::string fname);
 	void print() const;
 	void checkFileOpen(std::ifstream& fin, std::string fname);

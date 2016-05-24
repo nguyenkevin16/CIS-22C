@@ -9,8 +9,6 @@ rb.h
 #include <fstream>
 #include "player.h"
 
-
-
 class rb : public player {
 	double yards, TDs, ppg;
 public:
