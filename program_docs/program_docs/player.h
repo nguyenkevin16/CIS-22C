@@ -1,6 +1,4 @@
-/*
-player.h
-*/
+/* player.h */
 
 #ifndef PLAYER_H
 #define PLAYER_H

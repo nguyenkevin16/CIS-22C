@@ -67,7 +67,6 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="BST.h" />
     <ClInclude Include="hash.h" />
     <ClInclude Include="player.h" />
     <ClInclude Include="player_IO.h" />
