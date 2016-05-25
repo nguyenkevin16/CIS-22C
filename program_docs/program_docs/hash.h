@@ -6,8 +6,8 @@
 //  Copyright © 2016 Minting Ye. All rights reserved.
 //
 
-#ifndef HashTable_h
-#define HashTable_h
+#ifndef hash_h
+#define hash_h
 
 #include <string>
 #include <iostream>
