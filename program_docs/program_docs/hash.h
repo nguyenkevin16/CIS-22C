@@ -70,4 +70,4 @@ private:
     
 };
 
-#endif /* HashTable_h */
+#endif /* hash_h */
