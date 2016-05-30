@@ -6,12 +6,14 @@
 //  Copyright © 2016 Minting Ye. All rights reserved.
 //
 
-#ifndef hash_h
-#define hash_h
+#ifndef HashTable_h
+#define HashTable_h
 
 #include <string>
 #include <iostream>
 #include <cstdlib>
+#include "rb.h"
+
 using namespace std;
 
 class HashTable {
@@ -35,14 +37,14 @@ public:
     
     int numItemsAtIndex(int index);
     //Helper function to printTable
-    //Counts the number of items in each bucket
+    //Counts the number of items in each index
     
     void printTable();
-    //prints the first item of each bucket
-    //includes the number of items stored at that bucket
+    //prints the first item of each linked list
+    //includes the number of items stored at that index
     
-    void printBucket(int index);
-    //Prints all items stored at a particular bucket
+    void printList(int index);
+    //Prints all items stored at a particular list
     
     int findYards(string name);
     //Searches for Yards in the table using the key
@@ -53,14 +55,10 @@ private:
     
     struct Node
     {
-        int id;
-        string name;
-        double yards;
-        double TDs;
-        double ppg;
+        rb rbObject;
         Node* next;
-        Node(): id(0), name(""), yards(0), TDs(0), ppg(0), next(NULL){}
-        Node(int nid, string nname, double nyards, double nTDs, double nppg): id(nid), name(nname), yards(nyards), TDs(nTDs), ppg(nppg), next(NULL) {}
+        Node(): rbObject(), next(NULL){}
+        Node(int nid, string nname, double nyards, double nTDs, double nppg): rbObject( nid, nname, nyards, nTDs, nppg), next(NULL) {}
     };
     
     typedef struct Node* Nodeptr;
@@ -70,4 +68,4 @@ private:
     
 };
 
-#endif /* hash_h */
+#endif /* HashTable_h */
