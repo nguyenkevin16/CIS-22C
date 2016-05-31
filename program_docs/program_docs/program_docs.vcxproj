@@ -64,11 +64,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="hash.cpp" />
+    <ClCompile Include="HashTable.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="BST.h" />
     <ClInclude Include="HashTable.h" />
     <ClInclude Include="player.h" />
     <ClInclude Include="player_IO.h" />
