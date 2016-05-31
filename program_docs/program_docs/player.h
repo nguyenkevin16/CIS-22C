@@ -5,10 +5,10 @@ player.h
 #ifndef PLAYER_H
 #define PLAYER_H
 #include <string>
-#include <iostream>
-#include <iomanip>
 
-class player {
+class player 
+{
+private:
 	int ID;
 	std::string name;
 public:
@@ -22,6 +22,6 @@ public:
 	// MUTATORS
 	void set_ID(const int& i) { ID = i; }
 	void set_name(const std::string& s) { name = s; }
-	
 };
+
 #endif
