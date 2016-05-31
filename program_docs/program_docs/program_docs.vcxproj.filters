@@ -18,7 +18,7 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="hash.cpp">
+    <ClCompile Include="HashTable.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -27,9 +27,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="player_IO.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="BST.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="rb.h">
