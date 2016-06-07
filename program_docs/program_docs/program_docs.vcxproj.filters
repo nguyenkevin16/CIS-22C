@@ -35,6 +35,15 @@
     <ClInclude Include="HashTable.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="binarynode.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="bst.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="bst_player.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="RB_stats_2015.txt">

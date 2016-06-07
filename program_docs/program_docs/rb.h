@@ -30,15 +30,18 @@ public:
 	void set_ppg(const double& d) { ppg = d; }
 
 	// METHODS
-	// void print_rb() const;
+	//void print_rb();
 	// friend std::ostream& operator<<(std::ostream& out, const rb& p);
+
+
 };
 
 /*
-void rb::print_rb() const
+void rb::print_rb()
 {
-	std::cout << std::left << std::setw(2) << get_ID() << "\t" << std::setw(20) << get_name() << "\t" << std::setw(7) << get_yards() << "\t" << std::setw(7) << get_TDs() << "\t" << std::setw(7) << get_ppg() << std::endl;
+	//std::cout << std::left << std::setw(2) << get_ID() << "\t" << std::setw(20) << get_name() << "\t" << std::setw(7) << get_yards() << "\t" << std::setw(7) << get_TDs() << "\t" << std::setw(7) << get_ppg() << std::endl;
 }
+
 
 ostream& operator<<(ostream& out, const rb& p)
 {

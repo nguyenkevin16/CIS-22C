@@ -17,11 +17,26 @@
 using namespace std;
 
 class HashTable {
-    
+private:
+
+	struct Node
+	{
+		rb* rbObject;
+		Node* next;
+		Node() : rbObject(nullptr), next(nullptr) {}
+		Node(rb* rb_ptr) : rbObject(rb_ptr), next(nullptr) {}
+		Node(int nid, string nname, double nyards, double nTDs, double nppg) : rbObject(new rb(nid, nname, nyards, nTDs, nppg)), next(NULL) {}
+	};
+
+	typedef struct Node* Nodeptr;
+
+	static const int TABLE_SIZE = 13;
+	Nodeptr Table[TABLE_SIZE];
 public:
     HashTable();
-    
     ~HashTable();
+
+	rb* find(const string& str);
 
     int hash(string key);
     //returns the hash value for the given key
@@ -56,22 +71,6 @@ public:
     //returns -1 if the name is not found
 
 	void empty_list(int index);
-    
-private:
-    
-    struct Node
-    {
-        rb* rbObject;
-        Node* next;
-        Node(): rbObject(nullptr), next(nullptr) {}
-		Node(rb* rb_ptr) : rbObject(rb_ptr), next(nullptr) {}
-        Node(int nid, string nname, double nyards, double nTDs, double nppg): rbObject(new rb(nid, nname, nyards, nTDs, nppg)), next(NULL) {}
-	};
-    
-    typedef struct Node* Nodeptr;
-    
-    static const int TABLE_SIZE = 13;
-    Nodeptr Table[TABLE_SIZE];
     
 };
 

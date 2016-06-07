@@ -44,6 +44,37 @@ int HashTable::hash(string key)
 //the ASCII values of each character % the table size
 
 
+rb* HashTable::find(const string& str) {
+	int hashIndex = hash(str);
+
+	Table[hashIndex];
+
+	if (Table[hashIndex] == nullptr) {
+		return nullptr;
+	}
+	else {
+		Nodeptr temp = Table[hashIndex];
+		Nodeptr prev = nullptr;
+
+		if (str == temp->rbObject->get_name()) {
+			return temp->rbObject;
+		}
+
+		else {
+			while (temp->next != nullptr) {
+				prev = temp;
+				temp = temp->next;
+				
+				if (str == temp->rbObject->get_name()) {
+					return temp->rbObject;
+				}
+			}
+		}
+
+		return nullptr;
+	}
+}
+
 //********************** addItem function ********************
 //insert the item with the given key in sorted order
 void HashTable::addItem(int id, string name, double yards, double TDs, double ppg)
