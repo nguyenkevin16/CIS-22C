@@ -31,8 +31,8 @@ class node {
 
 		// Accessors
 		ItemType* get_data() { return data; }
-		node<ItemType>* get_left() const { return left; }
-		node<ItemType>* get_right() const { return right; }
+		node<ItemType>* get_left() { return left; }
+		node<ItemType>* get_right() { return right; }
 
 		// Mutators
 		void set_data (ItemType* d) { data = d; }

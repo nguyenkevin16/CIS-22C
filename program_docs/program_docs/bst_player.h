@@ -15,7 +15,7 @@
 #include <fstream>
 #include <iomanip>
 #include "bst.h"
-#include "rb.h"
+#include "player.h"
 
 template <typename ItemType>
 class bst_player : public bst<ItemType> {
@@ -26,13 +26,13 @@ public:
 
 	// Print Methods
 	void printPostOrder1(node<ItemType>* root);
-	void printPostOrder2(node<ItemType>* root, std::ofstream& out);
+	void printPostOrder2(node<ItemType>* root);
 	void printBreadthFirst(node<ItemType>* root);
 	void printGivenLevel(node<ItemType>* root, int level);
 
 	// Add Methods
 	void add(const ItemType& newData);
-	void add_ptr(ItemType* rbPtr);
+	virtual void add_ptr(ItemType* rbPtr);
 	node<ItemType>* add2(node<ItemType>* subTreePtr, node<ItemType>* newNodePtr);
 
 	// Search/Modify Methods
@@ -57,7 +57,7 @@ template <typename ItemType>
 void bst_player<ItemType>::printPostOrder1(node<ItemType>* root) {
 	// ofstream out(FILE_NAME, ios::trunc || ios::out);
 
-	printPostOrder2(root, out);
+	printPostOrder2(root);
 
 	// out.close();
 }
@@ -71,13 +71,13 @@ void bst_player<ItemType>::printPostOrder1(node<ItemType>* root) {
 //	Traverses the tree in post-order (left, right, root) or bottom-up format
 //	Prints nodes to file output as it traverses up the tree
 template <typename ItemType>
-void bst_player<ItemType>::printPostOrder2(node<ItemType>* root, std::ofstream& out) {
+void bst_player<ItemType>::printPostOrder2(node<ItemType>* root) {
 	if (root == nullptr) return;
 
-	printPostOrder2(root->get_left(), out);
-	printPostOrder2(root->get_right(), out);
+	printPostOrder2(root->get_left());
+	printPostOrder2(root->get_right());
 
-	cout << setw(30) << left << root->get_data().get_name() << root->get_data().get_birthday() << endl;
+	cout << setw(30) << left << root->get_data()->get_name() << endl;
 }
 
 //--------------------------------------------------------------

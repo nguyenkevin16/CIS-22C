@@ -10,7 +10,6 @@
 #include <iostream>
 #include <string>
 
-using namespace std;
 
 //********************** constructor ********************
 HashTable::HashTable()
@@ -31,7 +30,7 @@ HashTable::~HashTable()
 }
 
 //********************** hash function ********************
-int HashTable::hash(string key)
+int HashTable::hash(std::string key)
 {
     int index = 0;
     int sum = 0;
@@ -44,7 +43,7 @@ int HashTable::hash(string key)
 //the ASCII values of each character % the table size
 
 
-rb* HashTable::find(const string& str) {
+rb* HashTable::find(const std::string& str) {
 	int hashIndex = hash(str);
 
 	Table[hashIndex];
@@ -56,8 +55,8 @@ rb* HashTable::find(const string& str) {
 		Nodeptr temp = Table[hashIndex];
 		Nodeptr prev = nullptr;
 
-		if (str == temp->rbObject->get_name()) {
-			return temp->rbObject;
+		if (str == temp->rb_ptr->get_name()) {
+			return temp->rb_ptr;
 		}
 
 		else {
@@ -65,8 +64,8 @@ rb* HashTable::find(const string& str) {
 				prev = temp;
 				temp = temp->next;
 				
-				if (str == temp->rbObject->get_name()) {
-					return temp->rbObject;
+				if (str == temp->rb_ptr->get_name()) {
+					return temp->rb_ptr;
 				}
 			}
 		}
@@ -77,9 +76,9 @@ rb* HashTable::find(const string& str) {
 
 //********************** addItem function ********************
 //insert the item with the given key in sorted order
-void HashTable::addItem(int id, string name, double yards, double TDs, double ppg)
+void HashTable::addItem(std::string name, std::string team, int gp, double pts, double ppg, int ru_a, int ru_td, int rc_td, int tar, int rec, double ru_y, double rc_y)
 {
-	Nodeptr N = new Node(id, name, yards, TDs, ppg);
+	Nodeptr N = new Node(name, team, gp, pts, ppg, ru_a, ru_td, rc_td, tar, rec, ru_y, rc_y);
 	int hashIndex = hash(name);
 
 	if (Table[hashIndex] == nullptr) // Check if slot is empty, if yes, add to slot
@@ -90,14 +89,14 @@ void HashTable::addItem(int id, string name, double yards, double TDs, double pp
 	{
 		Nodeptr temp = Table[hashIndex];
 		Nodeptr prev = nullptr;
-		if (name < Table[hashIndex]->rbObject->get_name())
+		if (name < Table[hashIndex]->rb_ptr->get_name())
 		{
 			N->next = Table[hashIndex];
 			Table[hashIndex] = N;
 		}
 		else
 		{
-			while (temp != nullptr && temp->rbObject->get_name() <= name)  //see if new node should be placed before or after then exited item(s)
+			while (temp != nullptr && temp->rb_ptr->get_name() <= name)  //see if new node should be placed before or after then exited item(s)
 			{
 				prev = temp;
 				temp = temp->next;
@@ -111,10 +110,10 @@ void HashTable::addItem(int id, string name, double yards, double TDs, double pp
 
 //********************** addItem function ********************
 //insert the item with the given key in sorted order
-void HashTable::addItem(rb* rb_obj)
+void HashTable::addItem(rb* rb_new)
 {
-	Nodeptr N = new Node(rb_obj);
-	int hashIndex = hash(rb_obj->get_name());
+	Nodeptr N = new Node(rb_new);
+	int hashIndex = hash(rb_new->get_name());
 
 	if (Table[hashIndex] == nullptr) // Check if slot is empty, if yes, add to slot
 	{
@@ -124,14 +123,14 @@ void HashTable::addItem(rb* rb_obj)
 	{
 		Nodeptr temp = Table[hashIndex];
 		Nodeptr prev = nullptr;
-		if (rb_obj->get_name() < Table[hashIndex]->rbObject->get_name())
+		if (rb_new->get_name() < Table[hashIndex]->rb_ptr->get_name())
 		{
 			N->next = Table[hashIndex];
 			Table[hashIndex] = N;
 		}
 		else
 		{
-			while (temp != nullptr && temp->rbObject->get_name() <= rb_obj->get_name())  //see if new node should be placed before or after then exited item(s)
+			while (temp != nullptr && temp->rb_ptr->get_name() <= rb_new->get_name())  //see if new node should be placed before or after then exited item(s)
 			{
 				prev = temp;
 				temp = temp->next;
@@ -146,7 +145,7 @@ void HashTable::addItem(rb* rb_obj)
  
  //********************** removeItem function ********************
  //removes the item with the given name
-void HashTable::removeItem(string name)
+void HashTable::removeItem(std::string name)
 {
 	int hashIndex = hash(name);
 	Nodeptr temp = Table[hashIndex];
@@ -154,7 +153,7 @@ void HashTable::removeItem(string name)
 
 	if (Table[hashIndex] != nullptr) 
 	{
-		if (Table[hashIndex]->rbObject->get_name() == name)	
+		if (Table[hashIndex]->rb_ptr->get_name() == name)	
 		{
 			Table[hashIndex] = temp->next;
 			delete temp;
@@ -163,12 +162,12 @@ void HashTable::removeItem(string name)
 		{
 			while (temp != nullptr)
 			{
-				if (temp->rbObject->get_name() != name)
+				if (temp->rb_ptr->get_name() != name)
 				{
 					prev = temp;
 					temp = temp->next;
 				}
-				else if (temp->rbObject->get_name() == name)
+				else if (temp->rb_ptr->get_name() == name)
 				{
 					prev->next = temp->next;
 					delete temp;
@@ -176,7 +175,7 @@ void HashTable::removeItem(string name)
 				}
 			}
 
-			cout << "The player " << name << " could not be found." << endl;
+			std::cout << "The player " << name << " could not be found." << std::endl;
 		}
 	}
  }
@@ -191,19 +190,22 @@ int HashTable::numItemsAtIndex(int index)
 {
     Nodeptr temp = Table[index];
     int i=0;
-    if (Table[index]->rbObject == nullptr)
-        return i;
-    else
-    {
-		i++;
+	if (Table[index] != nullptr) {
+		if (Table[index]->rb_ptr == nullptr)
+			return i;
+		else
+		{
+			i++;
 
-        do
-        {
-            i++;
-            temp = temp->next;
-		} while (temp->next != nullptr);
-    return i;
-    }
+			do
+			{
+				i++;
+				temp = temp->next;
+			} while (temp->next != nullptr);
+
+			return i;
+		}
+	}
 }
 
 //********************** printTable function ********************
@@ -212,17 +214,17 @@ void HashTable::printTable()
 //includes the number of items stored at that list
 
 {
-    cout << "--------------------------------------------"<< endl;
+    std::cout << "--------------------------------------------"<< std::endl;
     for (int i=0; i<TABLE_SIZE; i++)
     {
-		cout << "Index " << i << " : # of nodes: " << numItemsAtIndex(i) << endl;
+		std::cout << "Index " << i << " : # of nodes: " << numItemsAtIndex(i) << std::endl;
 	}
         
 }
 
 
-//********************** findYards function ********************
-int HashTable::findYards(string name)
+//********************** findPts function ********************
+int HashTable::findPts(std::string name)
 //Searches for yards in the table using the key
 //returns the index under which the name is stored
 //returns -1 if the name is not found
@@ -232,9 +234,9 @@ int HashTable::findYards(string name)
     Nodeptr temp = Table[hashIndex];
     while (temp->next != NULL)
     {
-        if (temp->rbObject->get_name() == name)
+        if (temp->rb_ptr->get_name() == name)
         {
-            cout << temp->rbObject->get_yards();
+            std::cout << temp->rb_ptr->get_pts();
             return hashIndex;
         }
         else
@@ -242,7 +244,7 @@ int HashTable::findYards(string name)
          temp =temp->next;
         }
     }
-    cout << "The title was not stored in the table." <<endl;
+    std::cout << "The title was not stored in the table." <<std::endl;
     return -1;
 
 }
@@ -258,11 +260,9 @@ void HashTable::printList(int index)
 		do
 		{
 			{
-				cout << "ID: " << temp->rbObject->get_ID() << endl;
-				cout << "Name: " << temp->rbObject->get_name() << endl;
-				cout << "yards: " << temp->rbObject->get_yards() << endl;
-				cout << "TDs: " << temp->rbObject->get_TDs() << endl;
-				cout << "ppg: " << temp->rbObject->get_ppg() << endl;
+				std::cout << "Name: " << temp->rb_ptr->get_name() << std::endl;
+				std::cout << "yards: " << temp->rb_ptr->get_pts() << std::endl;
+				std::cout << "ppg: " << temp->rb_ptr->get_ppg() << std::endl;
 			}
 			temp = temp->next;
 		} while (temp != nullptr);
