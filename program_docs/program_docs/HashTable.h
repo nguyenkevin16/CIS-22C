@@ -69,7 +69,7 @@ public:
     //Prints all items stored at a particular list
     
     int findPts(std::string name);
-    //Searches for Yards in the table using the key
+    //Searches for points in the table using the key
     //returns the index under which the name is stored
     //returns -1 if the name is not found
 
