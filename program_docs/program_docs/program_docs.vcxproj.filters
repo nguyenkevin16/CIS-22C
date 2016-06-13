@@ -29,10 +29,19 @@
     <ClInclude Include="player_IO.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="rb.h">
+    <ClInclude Include="HashTable.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="HashTable.h">
+    <ClInclude Include="bst.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="bst_player.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AVL.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="binarynode.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
