@@ -188,25 +188,23 @@ int HashTable::numItemsAtIndex(int index)
 //Counts the number of items in each index
 
 {
-    Nodeptr temp = Table[index];
-    int i=0;
-	if (Table[index] != nullptr) {
-		if (Table[index]->rb_ptr == nullptr)
-			return i;
-		else
+	Nodeptr temp = Table[index];
+	int i = 0;
+	if (Table[index] == nullptr)
+		return i;
+	else
+	{
+		//i++;
+
+		while (temp != nullptr)
 		{
 			i++;
-
-			do
-			{
-				i++;
-				temp = temp->next;
-			} while (temp->next != nullptr);
-
-			return i;
+			temp = temp->next;
 		}
+		return i;
 	}
 }
+
 
 //********************** printTable function ********************
 void HashTable::printTable()

@@ -1,7 +1,6 @@
 #ifndef AVL_H
 #define AVL_H
 #include "bst_player.h"
-#include <cmath>
 
 template <typename ItemType>
 class AVL : public bst_player<ItemType> {
@@ -20,6 +19,7 @@ public:
 	void add_ptr(ItemType* rbPtr);
 
 	void display(node<ItemType>* ptr, int level);
+	void rprintInOrder(node<ItemType>* root);
 };
 
 template <typename ItemType>
@@ -93,10 +93,12 @@ template <typename ItemType>
 node<ItemType>* AVL<ItemType>::insert(node<ItemType>* root, node<ItemType>* newNodePtr) {
 	if (root == nullptr) {
 		return newNodePtr;
-	} else if (newNodePtr->get_data()->get_name() < root->get_data()->get_name()) {
+	}
+	else if (newNodePtr->get_data()->get_ppg() < root->get_data()->get_ppg()) {
 		root->set_left(insert(root->get_left(), newNodePtr));
 		root = balance(root);
-	} else if (newNodePtr->get_data()->get_name() >= root->get_data()->get_name()) {
+	}
+	else if (newNodePtr->get_data()->get_ppg() >= root->get_data()->get_ppg()) {
 		root->set_right(insert(root->get_right(), newNodePtr));
 		root = balance(root);
 	}
@@ -106,19 +108,27 @@ node<ItemType>* AVL<ItemType>::insert(node<ItemType>* root, node<ItemType>* newN
 
 template <typename ItemType>
 void AVL<ItemType>::display(node<ItemType>* ptr, int level) {
-	int i;
-
 	if (ptr != nullptr) {
 		display(ptr->get_right(), level + 1);
 		std::cout << endl;
 
 		if (ptr == this->get_root())
-			std::cout << "";
-		for (i = 0; i < level && ptr != this->get_root(); i++)
-			std::cout << "     ";
-		std::cout << ptr->get_data()->get_name();
+			std::cout << "Root -> ";
+		for (int i = 0; i < level && ptr != this->get_root(); i++)
+			std::cout << "        ";
+
+		std::cout << ptr->get_data()->get_ppg();
 		display(ptr->get_left(), level + 1);
 	}
+}
+
+template <typename ItemType>
+void AVL<ItemType>::rprintInOrder(node<ItemType>* root) {
+	if (root == nullptr) return;
+
+	rprintInOrder(root->get_right());
+	cout << setw(30) << left << root->get_data()->get_name() << endl;
+	rprintInOrder(root->get_left());
 }
 
 #endif

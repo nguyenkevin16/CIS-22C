@@ -13,52 +13,38 @@
 #include <cstdlib>
 #include "player_IO.h"
 #include "HashTable.h"
-#include "bst_player.h"
 #include "AVL.h"
 
 using namespace std;
 
 // Function Prototypes
 void enableDebug(bool bvalue);
-void menuController();
-void menuSwitch(const int& choice);
+void menu_controller(HashTable* hashPtr, AVL<rb>* avlPtr, rb_list obj_list);
+void menu_add(HashTable* hashPtr, AVL<rb>* avlPtr, rb_list obj_list);
+void menu_delete();
+void menu_find();
+void menu_printHash();
+void menu_printSortedData();
+void menu_printTree();
+void menu_printEfficiency();
 
 int main() {
 
 	enableDebug(true);
 
-	string filename = "RB_stats_2015.txt";
-	
+	HashTable* hashPtr = new HashTable;
+	AVL<rb>* avlPtr = new AVL<rb>;
 	rb_list obj_list;
-	obj_list.read_file(filename);
 
-	HashTable hash;
-	for (int i = 0; i < 50; i++) hash.addItem(obj_list.get_item(i));
-	// hash.removeItem("Devonta Freeman");
-	// hash.printList(12);	
-	// hash.printTable();			// PROBLEM WITH INDEXING
+	menu_controller(hashPtr, avlPtr, obj_list);
 
-	bst_player<rb> bst_obj;
-	for (int i = 0; i < 50; i++) bst_obj.add_ptr(obj_list.get_item(i));
-
-	// menuController();
-
-	AVL<rb> avl;
-
-	for (int i = 0; i < 20; i++) avl.add_ptr(obj_list.get_item(i));
-	avl.display(avl.get_root(), 1);
-
+	avlPtr->display(avlPtr->get_root(), 1);
 	cout << endl << endl;
+	// avlPtr->rprintInOrder(avlPtr->get_root());
 
-	avl.printBreadthFirst(avl.get_root());
-	
-	
-	
-	// bst_obj.add_ptr(obj_list.get_item(0));
-	// bst_obj.add_ptr(obj_list.get_item(1));
-	// bst_obj.add_ptr(obj_list.get_item(2));
+	delete hashPtr;
+	delete avlPtr;
 
-	// bst_obj.printBreadthFirst(bst_obj.get_root());
 
 	// cout << bst_obj.search_string(bst_obj.get_root(), "Jeremy Langford")->get_data() << endl;
 	// cout << hash.find("Jeremy Langford") << endl;
@@ -97,8 +83,7 @@ void enableDebug(bool bvalue)
 }
 
 
-void menuController() {
-	system("pause");
+void menu_controller(HashTable* hashPtr, AVL<rb>* avlPtr, rb_list obj_list) {
 	system("CLS");
 
 	cout << "-------Main Menu-------" << endl;
@@ -121,34 +106,84 @@ void menuController() {
 
 	} while (!isdigit(choice[0]));
 
-	menuSwitch(stoi(choice));
-}
-
-void menuSwitch(const int& choice) {
-	system("pause");
-	system("CLS");
-
-	switch (choice) {
+	switch (stoi(choice)) {
 		case 1:
-			break;
+			menu_add(hashPtr, avlPtr, obj_list); break;
 		case 2:
-			break;
+			menu_delete(); break;
 		case 3:
-			break;
+			menu_find(); break;
 		case 4:
-			break;
+			menu_printHash(); break;
 		case 5:
-			break;
+			menu_printSortedData(); break;
 		case 6:
-			break;
+			menu_printTree(); break;
 		case 7:
-			break;
+			menu_printEfficiency(); break;
 		case 8:
 			break;
 		case 9:
-			cout << "Now exiting..." << endl;
-			break;
+			cout << "Now exiting..." << endl; break;
 		default:
 			break;
 	}
+}
+
+void menu_add(HashTable* hashPtr, AVL<rb>* avlPtr, rb_list obj_list) {
+	system("CLS");
+	
+	cout << "Would you like to add a player manually or read from file?" << endl;
+	cout << "1. Manually" << endl;
+	cout << "2. Read from file" << endl;
+
+	string choice;
+	do {
+		cout << "Enter a choice: ";
+		cin >> choice;
+	} while (!isdigit(choice[0]));
+
+	if (choice == "2") {
+		string filename = "RB_stats_2015.txt";
+
+		obj_list.read_file(filename);
+
+		for (int i = 0; i < 50; i++) hashPtr->addItem(obj_list.get_item(i));
+		for (int i = 0; i < 50; i++) avlPtr->add_ptr(obj_list.get_item(i));
+		
+		return;
+	} else {
+	
+	} 
+
+}
+
+void menu_delete() {
+
+}
+
+void menu_find() {
+
+}
+
+void menu_printHash() {
+
+}
+
+void menu_printSortedData() {
+
+}
+
+void menu_printTree() {
+
+}
+
+void menu_printEfficiency() {
+
+}
+
+// Head-to-head comparison
+void compare(string& str1, string& str2, ) {
+	cout << hash.find(str1) << endl;
+	cout << hash.find(str2) << endl;
 }

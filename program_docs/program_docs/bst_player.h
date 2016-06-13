@@ -313,7 +313,7 @@ node<ItemType>* bst_player<ItemType>::remove(node<ItemType>* root, ItemType* dlt
 //
 template <typename ItemType>
 void bst_player<ItemType>::remove_string(node<ItemType>* root, const std::string& target) {
-	rb* temp = new rb(0, target);
+	rb* temp = new rb(target);
 
 	/*
 	person temp;

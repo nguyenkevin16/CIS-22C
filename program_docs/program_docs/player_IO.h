@@ -24,8 +24,8 @@ rb_list::rb_list() {
 rb_list::~rb_list() { 
 	for (int i = 0; i < 50; i++) {
 		if (rb_arr[i] != nullptr) {
-			delete rb_arr[i];
-			rb_arr[i] = nullptr;
+			// delete rb_arr[i];
+			// rb_arr[i] = nullptr;
 		}
 	} 
 }
@@ -44,6 +44,8 @@ void rb_list::read_file(std::string fname) {
 	// Start line-by-line loop
 	for (int i = 0; i < 50; i++) {
 		fin >> buffer;						// Get rid of ranking
+
+		if (fin.eof() || buffer.length() < 1) break;
 
 		fin >> name >> buffer;				// Get names
 		name += " " + buffer;
