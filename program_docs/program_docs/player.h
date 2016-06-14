@@ -109,7 +109,7 @@ public:
 
 	friend std::ostream& operator<<(std::ostream& out, const rb* p){
 
-		out << std::left << std::setw(20) << p->get_name() << std::setw(4) << p->get_team() << std::setw(4) << p->get_gp() << std::setw(4) << p->get_attempts() << std::setw(8) << p->get_RuY() << std::setw(4) << p->get_RuTD() << std::setw(4) << p->get_tar() << std::setw(4) << p->get_rec() << std::setw(5) << p->get_RcY() << std::setw(4) << p->get_RcTD() << std::setw(8) << p->get_pts() << std::setw(6) << p->get_ppg() << std::endl;
+		out << std::left << std::setw(20) << p->get_name() << std::setw(4) << p->get_team() << std::setw(4) << p->get_gp() << std::setw(4) << p->get_attempts() << std::setw(8) << p->get_RuY() << std::setw(4) << p->get_RuTD() << std::setw(4) << p->get_tar() << std::setw(4) << p->get_rec() << std::setw(5) << p->get_RcY() << std::setw(4) << p->get_RcTD() << std::setw(8) << p->get_pts() << std::setw(6) << p->get_ppg();
 		return out;
 	};
 

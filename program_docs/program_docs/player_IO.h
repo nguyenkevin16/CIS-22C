@@ -5,7 +5,7 @@
 #include"player.h"
 
 class rb_list {
-	rb* rb_arr[50];
+	rb* rb_arr[100];
 public:
 	rb_list();
 	~rb_list();
@@ -24,8 +24,8 @@ rb_list::rb_list() {
 rb_list::~rb_list() { 
 	for (int i = 0; i < 50; i++) {
 		if (rb_arr[i] != nullptr) {
-			// delete rb_arr[i];
-			// rb_arr[i] = nullptr;
+			delete rb_arr[i];
+			rb_arr[i] = nullptr;
 		}
 	} 
 }
@@ -39,10 +39,13 @@ void rb_list::read_file(std::string fname) {
 	int gp, ruA, ruTD, rcTD, tar, rec;
 	double pts, ppg, ruY, rcY;
 
+	int i = 0;
+
 	getline(fin, buffer);
 	
 	// Start line-by-line loop
-	for (int i = 0; i < 50; i++) {
+	// for (int i = 0; i < 50; i++) {
+	while (!fin.eof()) {
 		fin >> buffer;						// Get rid of ranking
 
 		if (fin.eof() || buffer.length() < 1) break;
@@ -61,6 +64,7 @@ void rb_list::read_file(std::string fname) {
 
 		// Dynamically allocate a new RB object and assign it to the RB_list array of pointers
 		rb_arr[i] = new rb(name, team, gp, pts, ppg, ruA, ruTD, rcTD, tar, rec, ruY, rcY);
+		i++;
 	}
 
 	fin.close();

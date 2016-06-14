@@ -31,11 +31,21 @@ private:
 
 	typedef struct Node* Nodeptr;
 
+	rb** rbPtr;
+
 	static const int TABLE_SIZE = 29;
 	Nodeptr Table[TABLE_SIZE];
 public:
     HashTable();
     ~HashTable();
+
+	int get_table_size() const { return TABLE_SIZE; }
+
+	int total_items();
+
+	void print_all();
+
+	rb** return_all(); 
 
 	Nodeptr get_idx(const int& idx) const { return Table[idx]; }
 

@@ -27,6 +27,8 @@ HashTable::~HashTable()
 	{
 		empty_list(i);
 	}
+
+	delete rbPtr;
 }
 
 //********************** hash function ********************
@@ -71,6 +73,71 @@ rb* HashTable::find(const std::string& str) {
 		}
 
 		return nullptr;
+	}
+}
+
+int HashTable::total_items() {
+	int total_items = 0;
+	for (int i = 0; i < TABLE_SIZE; i++) 
+		total_items += numItemsAtIndex(i);
+
+	return total_items;
+}
+
+
+rb** HashTable::return_all() {
+	int total_items = this->total_items();
+	
+	rbPtr = new rb*[total_items];
+
+	int list_size, rb_pos = 0;
+	Nodeptr curr, prev;
+
+	for (int table_idx = 0; table_idx < TABLE_SIZE; table_idx++) {
+		list_size = numItemsAtIndex(table_idx);
+		
+		curr = Table[table_idx];
+		prev = nullptr;
+		
+
+		for (int i = 0; i < list_size; i++) {
+			rbPtr[rb_pos] = curr->rb_ptr;
+
+			prev = curr;
+			curr = curr->next;
+
+			rb_pos++;
+		}
+	}
+
+	return rbPtr;
+}
+
+void HashTable::print_all() {
+	int list_size, rb_pos = 0;
+	Nodeptr curr, prev;
+
+	for (int table_idx = 0; table_idx < TABLE_SIZE; table_idx++) {
+		list_size = numItemsAtIndex(table_idx);
+
+		curr = Table[table_idx];
+		prev = nullptr;
+
+		if (curr != nullptr) {
+			std::cout << "Hash Table Index: " << table_idx + 1 << std::endl << std::endl;
+			for (int i = 0; i < list_size; i++) {
+
+				std::cout << i + 1 << ". ";
+				std::cout << curr->rb_ptr << std::endl;			// CHANGE TO SIMPLE OUTPUT - looks MESSY
+
+				prev = curr;
+				curr = curr->next;
+
+				rb_pos++;
+			}
+
+			std::cout << std::endl;
+		}
 	}
 }
 

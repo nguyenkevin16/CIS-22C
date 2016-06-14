@@ -2,12 +2,15 @@
 #define AVL_H
 #include "bst_player.h"
 
-template <typename ItemType>
+template <typename ItemType, typename KeyType>
 class AVL : public bst_player<ItemType> {
+protected:
+	KeyType key;
 public:
 	// Constructors
 	AVL() : bst_player() {}
-	AVL(ItemType* d) : bst_player(d) {}
+	// AVL(ItemType* d) : bst_player(d) {}
+	AVL(KeyType k) : bst_player(), key(k) {}
 
 	int bfactor(node<ItemType>* ptr);
 	node<ItemType>* rr_rotation(node<ItemType>* parent);
@@ -22,16 +25,16 @@ public:
 	void rprintInOrder(node<ItemType>* root);
 };
 
-template <typename ItemType>
-int AVL<ItemType>::bfactor(node<ItemType>* ptr) {
+template <typename ItemType, typename KeyType>
+int AVL<ItemType, KeyType>::bfactor(node<ItemType>* ptr) {
 	int l_height = get_height(ptr->get_left());
 	int r_height = get_height(ptr->get_right());
 	int b_factor = l_height - r_height;
 	return b_factor;
 }
 
-template <typename ItemType>
-node<ItemType>* AVL<ItemType>::rr_rotation(node<ItemType>* parent) {
+template <typename ItemType, typename KeyType>
+node<ItemType>* AVL<ItemType, KeyType>::rr_rotation(node<ItemType>* parent) {
 	node<ItemType>* temp;
 	temp = parent->get_right();
 	parent->set_right(temp->get_left());
@@ -39,8 +42,8 @@ node<ItemType>* AVL<ItemType>::rr_rotation(node<ItemType>* parent) {
 	return temp;
 }
 
-template <typename ItemType>
-node<ItemType>* AVL<ItemType>::ll_rotation(node<ItemType>* parent) {
+template <typename ItemType, typename KeyType>
+node<ItemType>* AVL<ItemType, KeyType>::ll_rotation(node<ItemType>* parent) {
 	node<ItemType>* temp;
 	temp = parent->get_left();
 	parent->set_left(temp->get_right());
@@ -48,24 +51,24 @@ node<ItemType>* AVL<ItemType>::ll_rotation(node<ItemType>* parent) {
 	return temp;
 }
 
-template <typename ItemType>
-node<ItemType>* AVL<ItemType>::lr_rotation(node<ItemType>* parent) {
+template <typename ItemType, typename KeyType>
+node<ItemType>* AVL<ItemType, KeyType>::lr_rotation(node<ItemType>* parent) {
 	node<ItemType>* temp;
 	temp = parent->get_left();
 	parent->set_left(rr_rotation(temp));
 	return ll_rotation(parent);
 }
 
-template <typename ItemType>
-node<ItemType>* AVL<ItemType>::rl_rotation(node<ItemType>* parent) {
+template <typename ItemType, typename KeyType>
+node<ItemType>* AVL<ItemType, KeyType>::rl_rotation(node<ItemType>* parent) {
 	node<ItemType>* temp;
 	temp = parent->get_right();
 	parent->set_right(ll_rotation(temp));
 	return rr_rotation(parent);
 }
 
-template <typename ItemType>
-node<ItemType>* AVL<ItemType>::balance(node<ItemType>* temp) {
+template <typename ItemType, typename KeyType>
+node<ItemType>* AVL<ItemType, KeyType>::balance(node<ItemType>* temp) {
 	int b_factor = bfactor(temp);
 
 	if (b_factor > 1) {
@@ -83,51 +86,113 @@ node<ItemType>* AVL<ItemType>::balance(node<ItemType>* temp) {
 	return temp;
 }
 
-template <typename ItemType>
-void AVL<ItemType>::add_ptr(ItemType* rbPtr) {
+template <typename ItemType, typename KeyType>
+void AVL<ItemType, KeyType>::add_ptr(ItemType* rbPtr) {
 	node<ItemType>* newNodePtr = new node<ItemType>(rbPtr);
 	root = insert(root, newNodePtr);
 }
 
-template <typename ItemType>
-node<ItemType>* AVL<ItemType>::insert(node<ItemType>* root, node<ItemType>* newNodePtr) {
-	if (root == nullptr) {
-		return newNodePtr;
-	}
-	else if (newNodePtr->get_data()->get_ppg() < root->get_data()->get_ppg()) {
-		root->set_left(insert(root->get_left(), newNodePtr));
-		root = balance(root);
-	}
-	else if (newNodePtr->get_data()->get_ppg() >= root->get_data()->get_ppg()) {
-		root->set_right(insert(root->get_right(), newNodePtr));
-		root = balance(root);
-	}
+template <typename ItemType, typename KeyType>
+node<ItemType>* AVL<ItemType, KeyType>::insert(node<ItemType>* root, node<ItemType>* newNodePtr) {
+	if (key == "name") {
+		if (root == nullptr) {
+			return newNodePtr;
+		}
+		else if (newNodePtr->get_data()->get_name() < root->get_data()->get_name()) {
+			root->set_left(insert(root->get_left(), newNodePtr));
+			root = balance(root);
+		}
+		else if (newNodePtr->get_data()->get_name() >= root->get_data()->get_name()) {
+			root->set_right(insert(root->get_right(), newNodePtr));
+			root = balance(root);
+		}
 
-	return root;
+		return root;
+	} else if (key == "ppg") {
+		if (root == nullptr) {
+			return newNodePtr;
+		}
+		else if (newNodePtr->get_data()->get_ppg() < root->get_data()->get_ppg()) {
+			root->set_left(insert(root->get_left(), newNodePtr));
+			root = balance(root);
+		}
+		else if (newNodePtr->get_data()->get_ppg() >= root->get_data()->get_ppg()) {
+			root->set_right(insert(root->get_right(), newNodePtr));
+			root = balance(root);
+		}
+
+		return root;
+	} else if (key == "pts") {
+		if (root == nullptr) {
+			return newNodePtr;
+		}
+		else if (newNodePtr->get_data()->get_pts() < root->get_data()->get_pts()) {
+			root->set_left(insert(root->get_left(), newNodePtr));
+			root = balance(root);
+		}
+		else if (newNodePtr->get_data()->get_pts() >= root->get_data()->get_pts()) {
+			root->set_right(insert(root->get_right(), newNodePtr));
+			root = balance(root);
+		}
+
+		return root;
+	}
 }
 
-template <typename ItemType>
-void AVL<ItemType>::display(node<ItemType>* ptr, int level) {
-	if (ptr != nullptr) {
-		display(ptr->get_right(), level + 1);
-		std::cout << endl;
+template <typename ItemType, typename KeyType>
+void AVL<ItemType, KeyType>::display(node<ItemType>* ptr, int level) {
+	if (key == "name") {
+		if (ptr != nullptr) {
+			display(ptr->get_right(), level + 1);
+			std::cout << endl;
 
-		if (ptr == this->get_root())
-			std::cout << "Root -> ";
-		for (int i = 0; i < level && ptr != this->get_root(); i++)
-			std::cout << "        ";
+			if (ptr == this->get_root())
+				std::cout << "Root -> ";
+			for (int i = 0; i < level && ptr != this->get_root(); i++)
+				std::cout << "        ";
 
-		std::cout << ptr->get_data()->get_ppg();
-		display(ptr->get_left(), level + 1);
+			std::cout << ptr->get_data()->get_name();
+			display(ptr->get_left(), level + 1);
+		}
+	}
+
+	else if (key == "ppg") {
+		if (ptr != nullptr) {
+			display(ptr->get_right(), level + 1);
+			std::cout << endl;
+
+			if (ptr == this->get_root())
+				std::cout << "Root -> ";
+			for (int i = 0; i < level && ptr != this->get_root(); i++)
+				std::cout << "        ";
+
+			std::cout << ptr->get_data()->get_ppg();
+			display(ptr->get_left(), level + 1);
+		}
+	}
+
+	else if (key == "pts") {
+		if (ptr != nullptr) {
+			display(ptr->get_right(), level + 1);
+			std::cout << endl;
+
+			if (ptr == this->get_root())
+				std::cout << "Root -> ";
+			for (int i = 0; i < level && ptr != this->get_root(); i++)
+				std::cout << "        ";
+
+			std::cout << ptr->get_data()->get_pts();
+			display(ptr->get_left(), level + 1);
+		}
 	}
 }
 
-template <typename ItemType>
-void AVL<ItemType>::rprintInOrder(node<ItemType>* root) {
+template <typename ItemType, typename KeyType>
+void AVL<ItemType, KeyType>::rprintInOrder(node<ItemType>* root) {
 	if (root == nullptr) return;
 
 	rprintInOrder(root->get_right());
-	cout << setw(30) << left << root->get_data()->get_name() << endl;
+	cout << setw(30) << left << root->get_data() << endl;
 	rprintInOrder(root->get_left());
 }
 

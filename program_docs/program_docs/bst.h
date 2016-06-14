@@ -25,7 +25,7 @@ protected:
 public:
 	// Constructors
 	bst() : root(nullptr) {}
-	bst(ItemType* d) : root(new node<ItemType>(d)) {}
+	// bst(ItemType* d) : root(new node<ItemType>(d)) {}
 	bst(node<ItemType>* ptr) { root = copyTree(ptr); }						// Copy Constructor
 	~bst() { destroyTree(root); }											// Destructor
 

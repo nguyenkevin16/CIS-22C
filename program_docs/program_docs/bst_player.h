@@ -22,7 +22,7 @@ class bst_player : public bst<ItemType> {
 public:
 	// Constructors
 	bst_player() : bst() {}
-	bst_player(ItemType* d) : bst(d) {}
+	// bst_player(ItemType* d) : bst(d) {}
 
 	// Print Methods
 	void printPostOrder1(node<ItemType>* root);
