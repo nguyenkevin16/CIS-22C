@@ -225,7 +225,7 @@ void HashTable::printTable()
 
 //********************** findPts function ********************
 int HashTable::findPts(std::string name)
-//Searches for yards in the table using the key
+//Searches for points in the table using the key, print it out to the screen
 //returns the index under which the name is stored
 //returns -1 if the name is not found
 
@@ -244,7 +244,7 @@ int HashTable::findPts(std::string name)
          temp =temp->next;
         }
     }
-    std::cout << "The title was not stored in the table." <<std::endl;
+    std::cout << "The name was not stored in the table." <<std::endl;
     return -1;
 
 }
@@ -252,7 +252,7 @@ int HashTable::findPts(std::string name)
 
 //********************** printList function ********************
 void HashTable::printList(int index)
-//Prints all items stored at a particular list
+//Prints all items stored at a particular index
 {
     Nodeptr temp = Table[index];
     
