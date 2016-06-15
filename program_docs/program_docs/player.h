@@ -113,6 +113,10 @@ public:
 		return out;
 	};
 
+	void print_simple(){
+
+		std::cout << std::left << std::setw(22) << get_name() << std::setw(10) << get_team() << std::setw(10) << get_pts() << std::setw(10) << get_ppg() << std::endl;
+	}
 
 };
 

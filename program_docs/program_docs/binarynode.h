@@ -17,9 +17,6 @@
 template <typename ItemType>
 class node {
 	protected:
-		// typedef node<ItemType>* bst_nodeptr;
-		// typedef ItemType* dataptr;
-
 		ItemType* data;
 		node<ItemType>* left;
 		node<ItemType>* right;

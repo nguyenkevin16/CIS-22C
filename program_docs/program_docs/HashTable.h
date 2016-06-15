@@ -31,7 +31,7 @@ private:
 
 	typedef struct Node* Nodeptr;
 
-	rb** rbPtr;
+	rb** return_ptrs;
 
 	static const int TABLE_SIZE = 29;
 	Nodeptr Table[TABLE_SIZE];

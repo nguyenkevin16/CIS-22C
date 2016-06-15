@@ -32,7 +32,14 @@ void menu_printHash(HashTable* hashPtr);
 void menu_printSortedData(HashTable* hashPtr);
 void menu_printTree(HashTable* hashPtr);
 void menu_printEfficiency(HashTable* hashPtr);
+void menu_save(HashTable* hashPtr);
+void menu_compare(HashTable* hashPtr);
+void print_title(ostream & out);
+void print_title();
 
+//--------------------------
+//			MAIN
+//--------------------------
 int main() {
 
 	enableDebug(true);
@@ -40,8 +47,8 @@ int main() {
 	HashTable* hashPtr = new HashTable;
 	rb_list obj_list;
 
-	obj_list.read_file("RB_stats_2015.txt");
-	for (int i = 0; i < 50; i++) hashPtr->addItem(obj_list.get_item(i));
+	// obj_list.read_file("RB_stats_2015.txt");
+	// for (int i = 0; i < 50; i++) hashPtr->addItem(obj_list.get_item(i));
 
 	menu_controller(hashPtr, obj_list);
 
@@ -51,6 +58,9 @@ int main() {
 	return 0;
 }
 
+//--------------------------
+//		   Functions
+//--------------------------
 void enableDebug(bool bvalue)
 {
 	if (!bvalue) return;
@@ -71,7 +81,7 @@ void enableDebug(bool bvalue)
 void menu_controller(HashTable* hashPtr, rb_list& obj_list) {
 	string choice;
 
-	while (choice != "9") {
+	while (choice != "10") {
 		system("CLS");
 
 		cout << "-------Main Menu-------" << endl;
@@ -83,7 +93,8 @@ void menu_controller(HashTable* hashPtr, rb_list& obj_list) {
 		cout << "6. Print indented tree " << endl;
 		cout << "7. Print efficieny     " << endl;
 		cout << "8. Team choice         " << endl;
-		cout << "9. Exit                " << endl;
+		cout << "9. Save to file        " << endl;
+		cout << "10. Exit               " << endl;
 		cout << "-----------------------" << endl;
 
 		do {
@@ -108,9 +119,12 @@ void menu_controller(HashTable* hashPtr, rb_list& obj_list) {
 		case 7:
 			menu_printEfficiency(hashPtr); break;
 		case 8:
-			break;
+			menu_compare(hashPtr); break;
 		case 9:
-			cout << "Now exiting..." << endl; break;
+			menu_save(hashPtr); break;
+		case 10:
+			cout << "Now exiting..." << endl; 
+			menu_save(hashPtr); break;
 		default:
 			break;
 		}
@@ -122,7 +136,8 @@ void menu_add(HashTable* hashPtr, rb_list& obj_list) {
 	
 	cout << "Would you like to add a player manually or read from file?" << endl;
 	cout << "1. Manually" << endl;
-	cout << "2. Read from file" << endl;
+	cout << "2. Start new file" << endl;
+	cout << "3. Use default file" << endl;
 
 	string choice;
 	do {
@@ -131,29 +146,89 @@ void menu_add(HashTable* hashPtr, rb_list& obj_list) {
 	} while (!isdigit(choice[0]));
 
 	if (choice == "1") {
+		string buffer, name, team;
+		int gp, ruA, ruTD, rcTD, tar, rec;
+		double pts, ppg, ruY, rcY;
 
+		cout << "Enter the player's name: ";
+		cin.ignore();
+		getline(cin, name);
 
+		cout << "Enter the 3-letter abbreviation for the player's team: ";
+		cin >> team;
 
+		cout << "Enter the number of games played last season: ";
+		cin >> gp;
+
+		cout << "Enter the number of rushing attempts: ";
+		cin >> ruA;
+
+		cout << "Enter the number of rushing yards: ";
+		cin >> ruY;
+
+		cout << "Enter the number of rushing TDs: ";
+		cin >> ruTD;
+
+		cout << "Enter the number of targets: ";
+		cin >> tar;
+
+		cout << "Enter the number of receptions: ";
+		cin >> rec;
+
+		cout << "Enter the number of receiving yards: ";
+		cin >> rcY;
+
+		cout << "Enter the number of receiving TDs: ";
+		cin >> rcTD;
+
+		cout << "Enter the number of fantasy points: ";
+		cin >> pts;
+
+		if (gp != 0) ppg = pts / gp;
+		else ppg = 0;
+
+		hashPtr->addItem(obj_list.add(name, team, gp, pts, ppg, ruA, ruTD, rcTD, tar, rec, ruY, rcY));
 	}
 
-
 	else if (choice == "2") {
+		//string filename = "RB_stats_2015.txt";
+		string filename;
+		
+		cout << "Enter the name of the file you would like to work with: ";
+		cin.ignore();
+		getline(cin, filename);
+
+		obj_list.read_file(filename);
+
+		for (int i = 0; i < hashPtr->get_table_size(); i++) {
+			hashPtr->empty_list(i);
+		}
+
+		for (int i = 0; i < 50; i++) hashPtr->addItem(obj_list.get_item(i));
+	} 
+
+	else if (choice == "3") {
 		string filename = "RB_stats_2015.txt";
 
 		obj_list.read_file(filename);
 
+		for (int i = 0; i < hashPtr->get_table_size(); i++) {
+			hashPtr->empty_list(i);
+		}
+
 		for (int i = 0; i < 50; i++) hashPtr->addItem(obj_list.get_item(i));
-		
-		return;
-	} 
+	}
+
+	system("pause");
+	return;
 }
 
 void menu_delete(HashTable* hashPtr) {
-	string buffer, name;
+	string name;
 
 	cout << "Enter the name of the player you wish to remove: ";
-	cin >> name >> buffer;
-	name += " " + buffer;
+	cin.ignore();
+	getline(cin, name);
 
 	if (hashPtr->find(name) != nullptr) {
 		hashPtr->removeItem(name);
@@ -165,11 +240,11 @@ void menu_delete(HashTable* hashPtr) {
 }
 
 void menu_find(HashTable* hashPtr) {
-	string buffer, name;
+	string name;
 
 	cout << "Please enter the name of the player: ";
-	cin >> name >> buffer;
-	name += " " + buffer;
+	cin.ignore();
+	getline(cin, name);
 
 	if (hashPtr->find(name) == nullptr) {
 		cout << "Could not find the player." << endl;
@@ -190,6 +265,7 @@ void menu_printHash(HashTable* hashPtr) {
 void menu_printSortedData(HashTable* hashPtr) {
 	rb** rbPtr = hashPtr->return_all();
 	int total = hashPtr->total_items();
+	AVL<rb, string>* avlPtr;
 	
 	system("CLS");
 
@@ -209,7 +285,7 @@ void menu_printSortedData(HashTable* hashPtr) {
 	if (choice == "1") {
 		system("CLS");
 
-		AVL<rb, string>* avlPtr = new AVL<rb, string>("name");
+		avlPtr = new AVL<rb, string>("name");
 
 		for (int i = 0; i < total; i++) avlPtr->add_ptr(rbPtr[i]);
 
@@ -217,12 +293,11 @@ void menu_printSortedData(HashTable* hashPtr) {
 		avlPtr->rprintInOrder(avlPtr->get_root());
 
 		delete avlPtr;
-		system("pause");
-		return;
+
 	} if (choice == "2") {
 		system("CLS");
 
-		AVL<rb, string>* avlPtr = new AVL<rb, string>("pts");
+		avlPtr = new AVL<rb, string>("pts");
 
 		for (int i = 0; i < total; i++) avlPtr->add_ptr(rbPtr[i]);
 		
@@ -230,12 +305,11 @@ void menu_printSortedData(HashTable* hashPtr) {
 		avlPtr->rprintInOrder(avlPtr->get_root());
 
 		delete avlPtr;
-		system("pause");
-		return;
+
 	} if (choice == "3") {
 		system("CLS");
 
-		AVL<rb, string>* avlPtr = new AVL<rb, string>("ppg");
+		avlPtr = new AVL<rb, string>("ppg");
 
 		for (int i = 0; i < total; i++) avlPtr->add_ptr(rbPtr[i]);
 
@@ -243,9 +317,10 @@ void menu_printSortedData(HashTable* hashPtr) {
 		avlPtr->rprintInOrder(avlPtr->get_root());
 
 		delete avlPtr;
-		system("pause");
-		return;
 	}
+
+	system("pause");
+	return;
 }
 
 void menu_printTree(HashTable* hashPtr) {
@@ -318,8 +393,84 @@ void menu_printEfficiency(HashTable* hashPtr) {
 
 	cout << "Load Factor: " << load_factor << endl;
 
-
+	int max_idx = 0;
+	for (int i = 0; i < hash_slots; i++) {
+		if (hashPtr->numItemsAtIndex(i)>hashPtr->numItemsAtIndex(max_idx)) max_idx = i;
+	}
+	
+	cout << "Longest list: " << "Index " << max_idx + 1 << " in the hash table with " << hashPtr->numItemsAtIndex(max_idx) << " items" << endl;
 	cout << "AVL Statistics: " << endl;
 
 	system("pause");
+}
+
+void menu_compare(HashTable* hashPtr) {
+	rb* player1;
+	rb* player2;
+
+	string name;
+
+	cout << "Please enter the name of the first player: ";
+	cin.ignore();
+	getline(cin, name);
+
+	if (hashPtr->find(name) == nullptr) {
+		cout << "Could not find the player. Back to the menu now." << endl;
+		system("pause");
+		return;
+	} else {
+		player1 = hashPtr->find(name);
+	}
+
+	cout << "Please enter the name of the second player: ";
+	getline(cin, name);
+
+	if (hashPtr->find(name) == nullptr) {
+		cout << "Could not find the player. Back to the menu now." << endl;
+		system("pause");
+		return;
+	} else {
+		player2 = hashPtr->find(name);
+	}
+
+	cout << player1 << endl << player2 << endl;
+
+	system("pause");
+}
+
+
+void menu_save(HashTable* hashPtr) {
+	rb** rbPtr = hashPtr->return_all();
+	int total = hashPtr->total_items();
+
+	ofstream out("outputtest.txt");
+	int count = 1;
+
+	//system("CLS");
+
+	AVL<rb, string>* avlPtr = new AVL<rb, string>("pts");
+
+	for (int i = 0; i < total; i++) avlPtr->add_ptr(rbPtr[i]);
+
+	print_title(out);
+	avlPtr->rsaveInOrder(avlPtr->get_root(), out, count);
+
+	delete avlPtr;
+	// system("pause");
+	return;
+}
+
+
+
+void print_title() {
+
+	std::cout << std::left << std::setw(20) << "Name" << std::setw(4) << "tm" << std::setw(4) << "GP" << std::setw(4) << "RuA" << std::setw(7) << "RuY" << std::setw(5) << "Rutd" << std::setw(4) << "tar" << std::setw(4) << "Rc" << std::setw(4) << "RcY" << std::setw(5) << "RcTD" << std::setw(8) << "pts" << std::setw(6) << "p/g" << std::endl;
+
+}
+
+
+void print_title(ostream & out) {
+
+	out << std::left << std::setw(4) << "No " << std::setw(20) << "Name" << std::setw(4) << "tm" << std::setw(4) << "GP" << std::setw(4) << "RuA" << std::setw(7) << "RuY" << std::setw(5) << "Rutd" << std::setw(4) << "tar" << std::setw(4) << "Rc" << std::setw(4) << "RcY" << std::setw(5) << "RcTD" << std::setw(8) << "pts" << std::setw(6) << "p/g" << std::endl;
+
 }

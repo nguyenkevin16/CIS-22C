@@ -10,7 +10,6 @@
 #include <iostream>
 #include <string>
 
-
 //********************** constructor ********************
 HashTable::HashTable()
 {
@@ -28,7 +27,7 @@ HashTable::~HashTable()
 		empty_list(i);
 	}
 
-	delete rbPtr;
+	delete[] return_ptrs;
 }
 
 //********************** hash function ********************
@@ -88,7 +87,8 @@ int HashTable::total_items() {
 rb** HashTable::return_all() {
 	int total_items = this->total_items();
 	
-	rbPtr = new rb*[total_items];
+	delete [] return_ptrs;
+	return_ptrs = new rb*[total_items];
 
 	int list_size, rb_pos = 0;
 	Nodeptr curr, prev;
@@ -101,7 +101,7 @@ rb** HashTable::return_all() {
 		
 
 		for (int i = 0; i < list_size; i++) {
-			rbPtr[rb_pos] = curr->rb_ptr;
+			return_ptrs[rb_pos] = curr->rb_ptr;
 
 			prev = curr;
 			curr = curr->next;
@@ -110,7 +110,7 @@ rb** HashTable::return_all() {
 		}
 	}
 
-	return rbPtr;
+	return return_ptrs;
 }
 
 void HashTable::print_all() {
@@ -124,11 +124,10 @@ void HashTable::print_all() {
 		prev = nullptr;
 
 		if (curr != nullptr) {
-			std::cout << "Hash Table Index: " << table_idx + 1 << std::endl << std::endl;
 			for (int i = 0; i < list_size; i++) {
 
-				std::cout << i + 1 << ". ";
-				std::cout << curr->rb_ptr << std::endl;			// CHANGE TO SIMPLE OUTPUT - looks MESSY
+				std::cout << table_idx + 1 << "." << i + 1 << ": ";
+				curr->rb_ptr->print_simple();							// CHANGE TO SIMPLE OUTPUT - looks MESSY
 
 				prev = curr;
 				curr = curr->next;

@@ -11,26 +11,55 @@ public:
 	~rb_list();
 
 	rb* get_item(const int& idx) const { return rb_arr[idx]; }
-	void read_file(std::string fname);
+	int read_file(std::string fname);
 	void checkFileOpen(std::ifstream& fin, std::string fname);
+	void empty_list();
+	int find_end();
+	rb* add(std::string name, std::string team, int gp, double pts, double ppg, int ru_a, int ru_td, int rc_td, int tar, int rec, double ru_y, double rc_y);
 };
 
 rb_list::rb_list() { 
-	for (int i = 0; i < 50; i++) {
+	for (int i = 0; i < 100; i++) {
 		rb_arr[i] = nullptr;
 	}
 }
 
 rb_list::~rb_list() { 
-	for (int i = 0; i < 50; i++) {
+	empty_list();
+}
+
+rb* rb_list::add(std::string name, std::string team, int gp, double pts, double ppg, int ru_a, int ru_td, int rc_td, int tar, int rec, double ru_y, double rc_y) {
+	int end = find_end();
+
+	rb_arr[end] = new rb(name, team, gp, pts, ppg, ru_a, ru_td, rc_td, tar, rec, ru_y, rc_y);
+
+	return rb_arr[end];
+}
+
+int rb_list::find_end() {
+	int idx;
+	
+	for (int i = 0; i < 100; i++) {
+		if (rb_arr[i] == nullptr) {
+			idx = i;
+			break;
+		}
+	}
+
+	return idx;
+}
+
+void rb_list::empty_list() {
+	for (int i = 0; i < 100; i++) {
 		if (rb_arr[i] != nullptr) {
 			delete rb_arr[i];
 			rb_arr[i] = nullptr;
 		}
-	} 
+	}
 }
 
-void rb_list::read_file(std::string fname) {
+int rb_list::read_file(std::string fname) {
+	empty_list();
 
 	std::ifstream fin(fname);
 	checkFileOpen(fin, fname);
@@ -68,6 +97,7 @@ void rb_list::read_file(std::string fname) {
 	}
 
 	fin.close();
+	return i;
 }
 
 void rb_list::checkFileOpen(std::ifstream& fin, std::string fname){

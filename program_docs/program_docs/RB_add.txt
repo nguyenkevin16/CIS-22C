@@ -1,0 +1,4 @@
+ First     last          tm  GP  RuA RuY   Rutd  Tar Rc  RcY RcTD pts   p/g
+ 1. Kevin Nguyen	    ATL	15	264	1,061	11	97	73	578	3	247.9	16.5
+ 2. Johnny Ieong	    MIN	16	327	1,485	11	36	30	222	0	236.7	14.8
+ 3. Bret Farley	        TB	16	288	1,402	6	44	33	271	1	209.3	13.1

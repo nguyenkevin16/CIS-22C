@@ -1,16 +1,15 @@
 #ifndef AVL_H
 #define AVL_H
-#include "bst_player.h"
+#include "bst.h"
 
 template <typename ItemType, typename KeyType>
-class AVL : public bst_player<ItemType> {
+class AVL : public bst<ItemType> {
 protected:
 	KeyType key;
 public:
 	// Constructors
-	AVL() : bst_player() {}
-	// AVL(ItemType* d) : bst_player(d) {}
-	AVL(KeyType k) : bst_player(), key(k) {}
+	AVL() : bst() {}
+	AVL(KeyType k) : bst(), key(k) {}
 
 	int bfactor(node<ItemType>* ptr);
 	node<ItemType>* rr_rotation(node<ItemType>* parent);
@@ -23,6 +22,7 @@ public:
 
 	void display(node<ItemType>* ptr, int level);
 	void rprintInOrder(node<ItemType>* root);
+	void rsaveInOrder(node<ItemType>* root, std::ostream& out, int& count);
 };
 
 template <typename ItemType, typename KeyType>
@@ -194,6 +194,18 @@ void AVL<ItemType, KeyType>::rprintInOrder(node<ItemType>* root) {
 	rprintInOrder(root->get_right());
 	cout << setw(30) << left << root->get_data() << endl;
 	rprintInOrder(root->get_left());
+}
+
+template <typename ItemType, typename KeyType>
+void AVL<ItemType, KeyType>::rsaveInOrder(node<ItemType>* root, std::ostream& out, int& count) {
+	if (root == nullptr) return;
+
+	rsaveInOrder(root->get_right(), out, count);
+	out << count << ". ";
+	if (count < 10) out << " ";
+	count++;
+	root->get_data()->save_player(out);
+	rsaveInOrder(root->get_left(), out, count);
 }
 
 #endif

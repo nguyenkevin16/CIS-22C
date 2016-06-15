@@ -71,12 +71,12 @@
     <ClInclude Include="AVL.h" />
     <ClInclude Include="binarynode.h" />
     <ClInclude Include="bst.h" />
-    <ClInclude Include="bst_player.h" />
     <ClInclude Include="HashTable.h" />
     <ClInclude Include="player.h" />
     <ClInclude Include="player_IO.h" />
   </ItemGroup>
   <ItemGroup>
+    <Text Include="RB_add.txt" />
     <Text Include="RB_stats_2015.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

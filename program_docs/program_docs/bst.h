@@ -18,14 +18,10 @@
 template <typename ItemType>
 class bst {
 protected:
-	//typedef binarynode<ItemType>* nodeptr;
-	//typedef ItemType* dataptr;
-
 	node<ItemType>* root;
 public:
 	// Constructors
 	bst() : root(nullptr) {}
-	// bst(ItemType* d) : root(new node<ItemType>(d)) {}
 	bst(node<ItemType>* ptr) { root = copyTree(ptr); }						// Copy Constructor
 	~bst() { destroyTree(root); }											// Destructor
 
