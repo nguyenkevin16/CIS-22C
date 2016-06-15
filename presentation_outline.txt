@@ -1,0 +1,96 @@
+							Fantasy Football Data Structure Presentation
+
+INTRO
+
+	-Breif intro, explain the appeal
+		-Fun, connectivity, risk, rewards, maybe a bit from "the league"
+
+	-Explain our theory on fantasy football, Why runningbacks are particularly interesting
+	-What stats are interesting?
+		-They directly relate to points
+		-why is it valuable to have player data by individual stats in different categories?
+
+
+DATA STRUCTURE DIAGRAM
+
+	-This is the general diagram of our project:
+		-We read in runninback objects from a file that contains a variety of data, with 1 player per line
+		-we input each runningback object to the hash table
+			-The hashing function assigns each runningback an index to sort into the hashed table
+		-the runningbacks objects are then added to the AVL directly from the hash table
+			-every time we are done with the AVL, we delete the AVL
+			-It is not efficient to completely rearrange the AVL
+
+		-To add a new runningback object, we would either manually (or from file) add new objects to Hash Table
+		-Then whenever we sort (using AVL), A new AVL that is sorted correctly is added
+
+FLOWCHART
+
+	-When we run the program, we have it set by default to create a list of RB objects based off of our inputfile
+		-these are automatically added to the Hash table
+
+	-Menu controller
+		1)Add
+			-Add 1 object or read in a new file
+		
+		2)Delete
+			-search for name, find hash, remove
+			-no need to delete from AVL
+
+		3)Find
+			-Same concept as delete
+			-Outputs all the data
+
+		4)List Hash sequence
+			-Prints every Hash Table location as well as every player and info at the location
+
+		5)LIst sorted data
+			-Creates an AVL based on a particular stat
+			-Outputs the data in the manner desired
+
+		6)Print indented tree
+			-An indented tree is printed
+			-An AVL is created based on desired key
+			-recursive function is called to properly show tree
+
+		7)Print efficiency stats
+			-How many Items
+			-how many levels
+			-Average items per hash
+
+		8)Compare (team choice)
+			-
+
+		9)Exit
+		
+	
+
+
+HASHING FUNCTION
+
+	-Explain the function, how and why it works
+	
+	-We use name, add up all the ascii values
+	-Mutate the values using function
+	-input the pointer to the RB to the Hash Table
+	
+	-Explain the efficiency
+
+
+PROGRAM DEMONSTRATION
+
+	-Before we start, show everybody what the input file looks like to get an idea of what the data looks like
+	
+	-Run program
+		-Show hash sequence 
+			-Explain efficiency?
+		-Show sorted list
+			-show the different options to sort by
+		-Lets add an item, or maybe a file to the hash
+			-Oh look there a new object!
+		-Lets delete one
+			-Oh no, we deleted an object
+		-Here's our tree
+			-Wow such tree! Very sorted!
+		-compare
+			-WOAH! Much same! 
