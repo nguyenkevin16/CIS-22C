@@ -22,6 +22,7 @@
 #include <cstdlib>
 #include "player_IO.h"
 #include "HashTable.h"
+#include "ConsoleColor.h"
 #include "AVL.h"
 
 using namespace std;
@@ -40,7 +41,10 @@ void menu_save(HashTable* hashPtr);
 void menu_compare(HashTable* hashPtr);
 void print_title(ostream & out);
 void print_title();
-
+void value_intinput(int& i);
+void value_douinput(double& d);
+void colorchange(double d1, double d2);
+void value_team(string &s);
 //--------------------------------------------------------------
 //								MAIN								
 //--------------------------------------------------------------
@@ -168,8 +172,8 @@ void menu_add(HashTable* hashPtr, rb_list& obj_list) {
 
 	if (choice == "1") {
 		string buffer, name, team;
-		int gp, ruA, ruTD, rcTD, tar, rec;
-		double pts, ppg, ruY, rcY;
+		int gp = 0, ruA = 0, ruTD = 0, rcTD = 0, tar = 0, rec = 0;
+		double pts = 0, ppg = 0, ruY = 0, rcY = 0;
 
 		cout << "Enter the player's name: ";
 		cin.ignore();
@@ -177,37 +181,50 @@ void menu_add(HashTable* hashPtr, rb_list& obj_list) {
 
 		cout << "Enter the 3-letter abbreviation for the player's team: ";
 		cin >> team;
+		value_team(team);
 
 		cout << "Enter the number of games played last season: ";
 		cin >> gp;
+		value_intinput(gp);
 
-		cout << "Enter the number of rushing attempts: ";
-		cin >> ruA;
+		if (gp != 0){
 
-		cout << "Enter the number of rushing yards: ";
-		cin >> ruY;
+			cout << "Enter the number of rushing attempts: ";
+			cin >> ruA;
+			value_intinput(ruA);
 
-		cout << "Enter the number of rushing TDs: ";
-		cin >> ruTD;
+			cout << "Enter the number of rushing yards: ";
+			cin >> ruY;
+			value_douinput(ruY);
 
-		cout << "Enter the number of targets: ";
-		cin >> tar;
+			cout << "Enter the number of rushing TDs: ";
+			cin >> ruTD;
+			value_intinput(ruTD);
 
-		cout << "Enter the number of receptions: ";
-		cin >> rec;
+			cout << "Enter the number of targets: ";
+			cin >> tar;
+			value_intinput(tar);
 
-		cout << "Enter the number of receiving yards: ";
-		cin >> rcY;
+			cout << "Enter the number of receptions: ";
+			cin >> rec;
+			value_intinput(rec);
 
-		cout << "Enter the number of receiving TDs: ";
-		cin >> rcTD;
+			cout << "Enter the number of receiving yards: ";
+			cin >> rcY;
+			value_douinput(rcY);
 
-		cout << "Enter the number of fantasy points: ";
-		cin >> pts;
+			cout << "Enter the number of receiving TDs: ";
+			cin >> rcTD;
+			value_intinput(rcTD);
 
-		if (gp != 0) ppg = pts / gp;
-		else ppg = 0;
+			cout << "Enter the number of fantasy points: ";
+			cin >> pts;
+			value_douinput(pts);
 
+			if (gp != 0) ppg = pts / gp;
+			else ppg = 0;
+		}
+		
 		hashPtr->addItem(obj_list.add(name, team, gp, pts, ppg, ruA, ruTD, rcTD, tar, rec, ruY, rcY));
 	}
 
@@ -319,7 +336,7 @@ void menu_printSortedData(HashTable* hashPtr) {
 
 		for (int i = 0; i < total; i++) avlPtr->add_ptr(rbPtr[i]);
 
-		cout << "Name           tm  GP  RuA RuY   Rutd  Tar Rc  RcY RcTD pts   p/g" << endl;
+		print_title();
 		avlPtr->rprintInOrder(avlPtr->get_root());
 
 		delete avlPtr;
@@ -331,7 +348,7 @@ void menu_printSortedData(HashTable* hashPtr) {
 
 		for (int i = 0; i < total; i++) avlPtr->add_ptr(rbPtr[i]);
 		
-		cout << "Name           tm  GP  RuA RuY   Rutd  Tar Rc  RcY RcTD pts   p/g" << endl;
+		print_title();
 		avlPtr->rprintInOrder(avlPtr->get_root());
 
 		delete avlPtr;
@@ -343,7 +360,7 @@ void menu_printSortedData(HashTable* hashPtr) {
 
 		for (int i = 0; i < total; i++) avlPtr->add_ptr(rbPtr[i]);
 
-		cout << "Name           tm  GP  RuA RuY   Rutd  Tar Rc  RcY RcTD pts   p/g" << endl;
+		print_title();
 		avlPtr->rprintInOrder(avlPtr->get_root());
 
 		delete avlPtr;
@@ -462,8 +479,18 @@ void menu_compare(HashTable* hashPtr) {
 	} else {
 		player2 = hashPtr->find(name);
 	}
+	print_title();
+	player1->print_compare();
+	std::cout  << std::setw(8); colorchange(player1->get_pts(), player2->get_pts());
+	std::cout << std::setw(6); colorchange(player1->get_ppg(), player2->get_ppg());
+	std::cout << white << std::endl;
 
-	cout << player1 << endl << player2 << endl;
+
+	player2->print_compare();
+	std::cout << std::setw(8); colorchange(player2->get_pts(), player1->get_pts());
+	std::cout << std::setw(6); colorchange(player2->get_ppg(), player1->get_ppg());
+	std::cout << white << std::endl;
+
 
 	system("pause");
 }
@@ -502,5 +529,39 @@ void print_title() {
 void print_title(ostream & out) {
 
 	out << std::left << std::setw(4) << "No " << std::setw(20) << "Name" << std::setw(4) << "tm" << std::setw(4) << "GP" << std::setw(4) << "RuA" << std::setw(7) << "RuY" << std::setw(5) << "Rutd" << std::setw(4) << "tar" << std::setw(4) << "Rc" << std::setw(4) << "RcY" << std::setw(5) << "RcTD" << std::setw(8) << "pts" << std::setw(6) << "p/g" << std::endl;
+
+}
+
+void colorchange(double d1, double d2)
+{
+	if (d1 >= d2)cout << red << d1;
+	else cout << white << d1;
+}
+
+void value_intinput(int &i){
+	while (i < 0){
+		cout << "invalue inpput, the value will not be less then zero." << endl << " Please input the correct value :";
+		cin >> i;
+	}
+}
+void value_douinput(double &d){
+
+	while (d < 0){
+		cout << "invalue inpput, the value will not be less then zero."<<endl<<" Please input the correct value :";
+		cin >> d;
+	}
+
+}
+void value_team(string &s){
+
+	while (s.length() != 3){
+
+		cout << "your team name doesn't match the formet" << endl << "please input 3-letter abbreviation for the player's team: ";
+		cin >> s;
+
+	}
+	return;
+
+
 
 }

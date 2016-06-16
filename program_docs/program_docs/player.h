@@ -97,6 +97,11 @@ public:
 		std::cout << std::left << std::setw(22) << get_name() << std::setw(10) << get_team() << std::setw(10) << get_pts() << std::setw(10) << get_ppg() << std::endl;
 	}
 
+void print_compare() {
+
+	std::cout << std::left << std::setw(20) << get_name() << std::setw(4) << get_team() << std::setw(4) << get_gp() << std::setw(4) << get_attempts() << std::setw(8) << get_RuY() << std::setw(4) << get_RuTD() << std::setw(4) << get_tar() << std::setw(4) << get_rec() << std::setw(5) << get_RcY() << std::setw(4) << get_RcTD();
+}
+
 };
 
 #endif
