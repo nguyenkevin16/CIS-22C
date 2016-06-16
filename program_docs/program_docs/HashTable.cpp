@@ -1,6 +1,5 @@
 //
-//  main.cpp
-//  HashTable
+//  HashTable.cpp
 //
 //  Created by Minting Ye on 5/17/16.
 //  Copyright © 2016 Minting Ye. All rights reserved.
@@ -9,7 +8,6 @@
 #include "HashTable.h"
 #include <iostream>
 #include <string>
-
 
 //********************** constructor ********************
 HashTable::HashTable()
@@ -27,6 +25,8 @@ HashTable::~HashTable()
 	{
 		empty_list(i);
 	}
+
+	delete[] return_ptrs;
 }
 
 //********************** hash function ********************
@@ -71,6 +71,71 @@ rb* HashTable::find(const std::string& str) {
 		}
 
 		return nullptr;
+	}
+}
+
+int HashTable::total_items() {
+	int total_items = 0;
+	for (int i = 0; i < TABLE_SIZE; i++) 
+		total_items += numItemsAtIndex(i);
+
+	return total_items;
+}
+
+
+rb** HashTable::return_all() {
+	int total_items = this->total_items();
+	
+	delete [] return_ptrs;
+	return_ptrs = new rb*[total_items];
+
+	int list_size, rb_pos = 0;
+	Nodeptr curr, prev;
+
+	for (int table_idx = 0; table_idx < TABLE_SIZE; table_idx++) {
+		list_size = numItemsAtIndex(table_idx);
+		
+		curr = Table[table_idx];
+		prev = nullptr;
+		
+
+		for (int i = 0; i < list_size; i++) {
+			return_ptrs[rb_pos] = curr->rb_ptr;
+
+			prev = curr;
+			curr = curr->next;
+
+			rb_pos++;
+		}
+	}
+
+	return return_ptrs;
+}
+
+void HashTable::print_all() {
+	int list_size, rb_pos = 0;
+	Nodeptr curr, prev;
+
+	for (int table_idx = 0; table_idx < TABLE_SIZE; table_idx++) {
+		list_size = numItemsAtIndex(table_idx);
+
+		curr = Table[table_idx];
+		prev = nullptr;
+
+		if (curr != nullptr) {
+			for (int i = 0; i < list_size; i++) {
+
+				std::cout << table_idx + 1 << "." << i + 1 << ": ";
+				curr->rb_ptr->print_simple();							// CHANGE TO SIMPLE OUTPUT - looks MESSY
+
+				prev = curr;
+				curr = curr->next;
+
+				rb_pos++;
+			}
+
+			std::cout << std::endl;
+		}
 	}
 }
 
@@ -188,25 +253,23 @@ int HashTable::numItemsAtIndex(int index)
 //Counts the number of items in each index
 
 {
-    Nodeptr temp = Table[index];
-    int i=0;
-	if (Table[index] != nullptr) {
-		if (Table[index]->rb_ptr == nullptr)
-			return i;
-		else
+	Nodeptr temp = Table[index];
+	int i = 0;
+	if (Table[index] == nullptr)
+		return i;
+	else
+	{
+		//i++;
+
+		while (temp != nullptr)
 		{
 			i++;
-
-			do
-			{
-				i++;
-				temp = temp->next;
-			} while (temp->next != nullptr);
-
-			return i;
+			temp = temp->next;
 		}
+		return i;
 	}
 }
+
 
 //********************** printTable function ********************
 void HashTable::printTable()

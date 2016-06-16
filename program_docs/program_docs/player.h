@@ -5,6 +5,7 @@ player.h
 #ifndef PLAYER_H
 #define PLAYER_H
 #include <string>
+#include <iomanip>
 
 class player {
 protected:
@@ -15,6 +16,7 @@ protected:
 public:
 	// CONSTRUCTORS
 	player() : name(""), team("Free Agent"), games_played(0), points(0), points_per_game(0) {}
+	player(std::string name) : name(name), team("Free Agent"), games_played(0), points(0), points_per_game(0) {}
 	player(std::string name, std::string team, int gp, double pts, double ppg)
 		: name(name), team(team), games_played(gp), points(pts), points_per_game(ppg) {}
 
@@ -45,6 +47,9 @@ public:
 	rb() 
 		:	player(), 
 			rush_att(0), rush_td(0), rec_td(0), targets(0), receptions(0), rush_yards(0), rec_yards(0) {}
+	
+	rb(std::string name)
+		: player(name), rush_att(0), rush_td(0), rec_td(0), targets(0), receptions(0), rush_yards(0), rec_yards(0) {}
 
 	rb(std::string name, std::string team, int gp, double pts, double ppg)
 		:	player(name, team, gp, pts, ppg), 
@@ -71,6 +76,26 @@ public:
 	void set_rec(const int& i) { receptions = i; }
 	void set_RuY(const double& d) { rush_yards = d; }
 	void set_RcY(const double& d) { rec_yards = d; }
+
+
+	void save_player(std::ostream& out) {
+		out << std::left << std::setw(20) << this->get_name() << std::setw(4) << this->get_team() << std::setw(4) << this->get_gp() << std::setw(4) << this->get_attempts() << std::setw(8) << this->get_RuY() << std::setw(4) << this->get_RuTD() << std::setw(4) << this->get_tar() << std::setw(4) << this->get_rec() << std::setw(5) << this->get_RcY() << std::setw(4) << this->get_RcTD() << std::setw(8) << this->get_pts() << std::setw(6) << this->get_ppg() << std::endl;
+	}
+
+	void print_rb() {
+		std::cout << std::left << std::setw(20) << get_name() << std::setw(4) << get_team() << std::setw(4) << get_gp() << std::setw(4) << get_attempts() << std::setw(8) << get_RuY() << std::setw(4) << get_RuTD() << std::setw(4) << get_tar() << std::setw(4) << get_rec() << std::setw(5) << get_RcY() << std::setw(4) << get_RcTD() << std::setw(8) << get_pts() << std::setw(6) << get_ppg() << std::endl;
+	};
+
+	friend std::ostream& operator<<(std::ostream& out, const rb* p){
+
+		out << std::left << std::setw(20) << p->get_name() << std::setw(4) << p->get_team() << std::setw(4) << p->get_gp() << std::setw(4) << p->get_attempts() << std::setw(8) << p->get_RuY() << std::setw(4) << p->get_RuTD() << std::setw(4) << p->get_tar() << std::setw(4) << p->get_rec() << std::setw(5) << p->get_RcY() << std::setw(4) << p->get_RcTD() << std::setw(8) << p->get_pts() << std::setw(6) << p->get_ppg();
+		return out;
+	};
+
+	void print_simple() {
+
+		std::cout << std::left << std::setw(22) << get_name() << std::setw(10) << get_team() << std::setw(10) << get_pts() << std::setw(10) << get_ppg() << std::endl;
+	}
 
 };
 

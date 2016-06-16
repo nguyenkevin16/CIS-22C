@@ -35,9 +35,6 @@
     <ClInclude Include="bst.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="bst_player.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="AVL.h">
       <Filter>Header Files</Filter>
     </ClInclude>

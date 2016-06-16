@@ -1,14 +1,16 @@
 //		
 //		bst.h
 //		
+//		Team 4
+//
 //		Kevin Nguyen
 //		Ka U Ieong
-//
-//		Copyright 2016
+//		Bret Farley
+//		Minting Ye
 //
 //		Template class for bst - one "root" pointer to the BST
 //		Contains various helper methods
-//		Used to derive BSTs for other datatypes
+//		Used to derive an AVL for use with the rb class found in "player.h"
 //
 
 #ifndef BST_H
@@ -17,28 +19,24 @@
 
 template <typename ItemType>
 class bst {
-protected:
-	//typedef binarynode<ItemType>* nodeptr;
-	//typedef ItemType* dataptr;
+	protected:
+		node<ItemType>* root;
+	public:
+		// Constructors
+		bst() : root(nullptr) {}
+		bst(node<ItemType>* ptr) { root = copyTree(ptr); }						// Copy Constructor
+		~bst() { destroyTree(root); }											// Destructor
 
-	node<ItemType>* root;
-public:
-	// Constructors
-	bst() : root(nullptr) {}
-	bst(ItemType* d) : root(new node<ItemType>(d)) {}
-	bst(node<ItemType>* ptr) { root = copyTree(ptr); }						// Copy Constructor
-	~bst() { destroyTree(root); }											// Destructor
+		// Accessor/Mutator
+		node<ItemType>* get_root() const { return root; }
+		void set_root(node<ItemType>* d) { root = d; }
 
-	// Accessor/Mutator
-	node<ItemType>* get_root() const { return root; }
-	void set_root(node<ItemType>* d) { root = d; }
-
-	// Helper Methods
-	bool isEmpty() const;
-	void destroyTree(node<ItemType>* ptr);
-	int get_height(node<ItemType>* node);
-	node<ItemType>* find_largest(node<ItemType>* root);
-	node<ItemType>* copyTree(node<ItemType>* root);
+		// Helper Methods
+		bool isEmpty() const;
+		void destroyTree(node<ItemType>* ptr);
+		int get_height(node<ItemType>* node);
+		node<ItemType>* find_largest(node<ItemType>* root);
+		node<ItemType>* copyTree(node<ItemType>* root);
 };
 
 //--------------------------------------------------------------
@@ -75,7 +73,6 @@ node<ItemType>* bst<ItemType>::copyTree(node<ItemType>* root) {
 	return newRoot;
 }
 
-
 //--------------------------------------------------------------
 //						isEmpty									
 //--------------------------------------------------------------
@@ -104,7 +101,6 @@ int bst<ItemType>::get_height(node<ItemType>* node) {
 		else return(rheight + 1);
 	}
 }
-
 
 //--------------------------------------------------------------
 //					find_largest
