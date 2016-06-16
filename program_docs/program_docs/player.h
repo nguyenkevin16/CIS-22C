@@ -1,12 +1,27 @@
-/*
-player.h
-*/
+//		
+//		player.h
+//		
+//		Team 4
+//
+//		Kevin Nguyen
+//		Ka U Ieong
+//		Bret Farley
+//		Minting Ye
+//
+//		Contains the player class and any derived subclasses (only 1 for rb right now)
+//		Used to store data on various NFL athletes
+//		Note: None are templated classes; however, all functions are defined inline
+//
 
 #ifndef PLAYER_H
 #define PLAYER_H
 #include <string>
+#include <iostream>
 #include <iomanip>
 
+//--------------------------------------------------------------
+//								PLAYER								
+//--------------------------------------------------------------
 class player {
 protected:
 	std::string name;
@@ -33,11 +48,11 @@ public:
 	void set_gp(const int& i) { games_played = i; }
 	void set_pts(const int& d) { points = d; }
 	void set_ppg(const int& d) { points_per_game = d; }
-
 };
 
-
-
+//--------------------------------------------------------------
+//								RB								
+//--------------------------------------------------------------
 class rb : public player {
 protected:
 	int rush_att, rush_td, rec_td, targets, receptions;
@@ -77,7 +92,7 @@ public:
 	void set_RuY(const double& d) { rush_yards = d; }
 	void set_RcY(const double& d) { rec_yards = d; }
 
-
+	// PRINT/SAVE
 	void save_player(std::ostream& out) {
 		out << std::left << std::setw(20) << this->get_name() << std::setw(4) << this->get_team() << std::setw(4) << this->get_gp() << std::setw(4) << this->get_attempts() << std::setw(8) << this->get_RuY() << std::setw(4) << this->get_RuTD() << std::setw(4) << this->get_tar() << std::setw(4) << this->get_rec() << std::setw(5) << this->get_RcY() << std::setw(4) << this->get_RcTD() << std::setw(8) << this->get_pts() << std::setw(6) << this->get_ppg() << std::endl;
 	}
@@ -87,20 +102,17 @@ public:
 	};
 
 	friend std::ostream& operator<<(std::ostream& out, const rb* p){
-
 		out << std::left << std::setw(20) << p->get_name() << std::setw(4) << p->get_team() << std::setw(4) << p->get_gp() << std::setw(4) << p->get_attempts() << std::setw(8) << p->get_RuY() << std::setw(4) << p->get_RuTD() << std::setw(4) << p->get_tar() << std::setw(4) << p->get_rec() << std::setw(5) << p->get_RcY() << std::setw(4) << p->get_RcTD() << std::setw(8) << p->get_pts() << std::setw(6) << p->get_ppg();
 		return out;
 	};
 
 	void print_simple() {
-
 		std::cout << std::left << std::setw(22) << get_name() << std::setw(10) << get_team() << std::setw(10) << get_pts() << std::setw(10) << get_ppg() << std::endl;
 	}
 
-void print_compare() {
-
-	std::cout << std::left << std::setw(20) << get_name() << std::setw(4) << get_team() << std::setw(4) << get_gp() << std::setw(4) << get_attempts() << std::setw(8) << get_RuY() << std::setw(4) << get_RuTD() << std::setw(4) << get_tar() << std::setw(4) << get_rec() << std::setw(5) << get_RcY() << std::setw(4) << get_RcTD();
-}
+	void print_compare() {
+		std::cout << std::left << std::setw(20) << get_name() << std::setw(4) << get_team() << std::setw(4) << get_gp() << std::setw(4) << get_attempts() << std::setw(8) << get_RuY() << std::setw(4) << get_RuTD() << std::setw(4) << get_tar() << std::setw(4) << get_rec() << std::setw(5) << get_RcY() << std::setw(4) << get_RcTD();
+	}
 
 };
 

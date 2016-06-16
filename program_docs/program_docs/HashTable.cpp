@@ -1,8 +1,15 @@
 //
-//  HashTable.cpp
+//		HashTable.cpp
 //
-//  Created by Minting Ye on 5/17/16.
-//  Copyright © 2016 Minting Ye. All rights reserved.
+//		Team 4
+//
+//		Kevin Nguyen
+//		Ka U Ieong
+//		Bret Farley
+//		Minting Ye
+//
+//		Created by Minting Ye on 5/17/16.
+//		Copyright © 2016 Minting Ye. All rights reserved.
 //
 
 #include "HashTable.h"
@@ -16,7 +23,6 @@ HashTable::HashTable()
 		Table[i] = nullptr;
 	}
 }
-
 
 //********************** destructor ********************
 HashTable::~HashTable()
@@ -42,7 +48,7 @@ int HashTable::hash(std::string key)
 }
 //the ASCII values of each character % the table size
 
-
+//********************** find function ********************
 rb* HashTable::find(const std::string& str) {
 	int hashIndex = hash(str);
 
@@ -74,6 +80,7 @@ rb* HashTable::find(const std::string& str) {
 	}
 }
 
+//********************** total items function ********************
 int HashTable::total_items() {
 	int total_items = 0;
 	for (int i = 0; i < TABLE_SIZE; i++) 
@@ -82,7 +89,7 @@ int HashTable::total_items() {
 	return total_items;
 }
 
-
+//********************** return all function ********************
 rb** HashTable::return_all() {
 	int total_items = this->total_items();
 	
@@ -112,6 +119,7 @@ rb** HashTable::return_all() {
 	return return_ptrs;
 }
 
+//********************** print all function ********************
 void HashTable::print_all() {
 	int list_size, rb_pos = 0;
 	Nodeptr curr, prev;
@@ -126,7 +134,7 @@ void HashTable::print_all() {
 			for (int i = 0; i < list_size; i++) {
 
 				std::cout << table_idx + 1 << "." << i + 1 << ": ";
-				curr->rb_ptr->print_simple();							// CHANGE TO SIMPLE OUTPUT - looks MESSY
+				curr->rb_ptr->print_simple();						
 
 				prev = curr;
 				curr = curr->next;
@@ -172,7 +180,6 @@ void HashTable::addItem(std::string name, std::string team, int gp, double pts, 
 	}
 }
 
-
 //********************** addItem function ********************
 //insert the item with the given key in sorted order
 void HashTable::addItem(rb* rb_new)
@@ -206,8 +213,6 @@ void HashTable::addItem(rb* rb_new)
 	}
 }
 
- 
- 
  //********************** removeItem function ********************
  //removes the item with the given name
 void HashTable::removeItem(std::string name)
@@ -245,8 +250,6 @@ void HashTable::removeItem(std::string name)
 	}
  }
 
- 
-
 //********************** numItemsAtIndex function ********************
 int HashTable::numItemsAtIndex(int index)
 //Helper function to printTable
@@ -270,7 +273,6 @@ int HashTable::numItemsAtIndex(int index)
 	}
 }
 
-
 //********************** printTable function ********************
 void HashTable::printTable()
 //prints the first item of each list
@@ -284,7 +286,6 @@ void HashTable::printTable()
 	}
         
 }
-
 
 //********************** findPts function ********************
 int HashTable::findPts(std::string name)
@@ -312,7 +313,6 @@ int HashTable::findPts(std::string name)
 
 }
 
-
 //********************** printList function ********************
 void HashTable::printList(int index)
 //Prints all items stored at a particular index
@@ -331,7 +331,6 @@ void HashTable::printList(int index)
 		} while (temp != nullptr);
 	}
 }
-
 
 //********************** empty_list() ********************
 void HashTable::empty_list(int index) {

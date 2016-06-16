@@ -1,3 +1,16 @@
+//		
+//		consolecolor.h
+//		
+//		Team 4
+//
+//		Kevin Nguyen
+//		Ka U Ieong
+//		Bret Farley
+//		Minting Ye
+//
+//		Used for changing the color of text for the comparison method.
+//
+
 #pragma once
 #include <iostream>
 #include <windows.h>
