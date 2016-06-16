@@ -66,6 +66,7 @@
   <ItemGroup>
     <ClCompile Include="HashTable.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="player_IO.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AVL.h" />

@@ -107,7 +107,7 @@ void menu_controller(HashTable* hashPtr, rb_list& obj_list) {
 		cout << "5. List sorted data    " << endl;
 		cout << "6. Print indented tree " << endl;
 		cout << "7. Print efficieny     " << endl;
-		cout << "8. Team choice         " << endl;
+		cout << "8. Compare		        " << endl;
 		cout << "9. Save to file        " << endl;
 		cout << "10. Exit               " << endl;
 		cout << "-----------------------" << endl;
@@ -153,16 +153,15 @@ void menu_controller(HashTable* hashPtr, rb_list& obj_list) {
 //	in:		hashTable* to hashTable obj; reference to list of 100 rb*
 //	out:	n/a
 //
-//	Add functionality - currently 3 options
-//	
+//	Add functionality - currently 2 options; Manually add the player or
+//	read from default file - "RB_stats_2015.txt"
 //
 void menu_add(HashTable* hashPtr, rb_list& obj_list) {
 	system("CLS");
 	
 	cout << "Would you like to add a player manually or read from file?" << endl;
 	cout << "1. Manually" << endl;
-	cout << "2. Start new file" << endl;
-	cout << "3. Use default file" << endl;
+	cout << "2. Use default file" << endl;
 
 	string choice;
 	do {
@@ -229,23 +228,6 @@ void menu_add(HashTable* hashPtr, rb_list& obj_list) {
 	}
 
 	else if (choice == "2") {
-		//string filename = "RB_stats_2015.txt";
-		string filename;
-		
-		cout << "Enter the name of the file you would like to work with: ";
-		cin.ignore();
-		getline(cin, filename);
-
-		obj_list.read_file(filename);
-
-		for (int i = 0; i < hashPtr->get_table_size(); i++) {
-			hashPtr->empty_list(i);
-		}
-
-		for (int i = 0; i < 50; i++) hashPtr->addItem(obj_list.get_item(i));
-	} 
-
-	else if (choice == "3") {
 		string filename = "RB_stats_2015.txt";
 
 		obj_list.read_file(filename);
@@ -261,6 +243,15 @@ void menu_add(HashTable* hashPtr, rb_list& obj_list) {
 	return;
 }
 
+//--------------------------------------------------------------
+//							menu_delete								
+//--------------------------------------------------------------
+//	in:		hashTable* to hashTable obj
+//	out:	n/a
+//
+//	Asks user for name of player to be removed
+//	Removes player form hashTable (any AVL created will reflect this removal)
+//
 void menu_delete(HashTable* hashPtr) {
 	string name;
 
@@ -281,6 +272,16 @@ void menu_delete(HashTable* hashPtr) {
 	return;
 }
 
+//--------------------------------------------------------------
+//							menu_find								
+//--------------------------------------------------------------
+//	in:		hashTable* to hashTable obj
+//	out:	n/a
+//
+//	Asks user for name of player to find
+//	searches hashTable for player
+//	Standard outputs the player and stats
+//
 void menu_find(HashTable* hashPtr) {
 	string name;
 
@@ -293,6 +294,7 @@ void menu_find(HashTable* hashPtr) {
 	if (hashPtr->find(name) == nullptr) {
 		cout << "Could not find the player." << endl;
 	} else {
+		print_title();
 		cout << hashPtr->find(name) << endl << endl;
 	}
 
@@ -300,6 +302,14 @@ void menu_find(HashTable* hashPtr) {
 	return;
 }
 
+//--------------------------------------------------------------
+//							menu_printHash								
+//--------------------------------------------------------------
+//	in:		hashTable* to hashTable obj
+//	out:	n/a
+//
+//	Prints the entire contents of the hash table to the screen
+//
 void menu_printHash(HashTable* hashPtr) {
 	system("CLS");
 
@@ -309,6 +319,16 @@ void menu_printHash(HashTable* hashPtr) {
 	return;
 }
 
+//--------------------------------------------------------------
+//							menu_printSortedData								
+//--------------------------------------------------------------
+//	in:		hashTable* to hashTable obj
+//	out:	n/a
+//
+//	Sorts data by creating an AVL based on a KEY
+//	Currently only 3 keys - name, pts, pts per game
+//	Currently prints in DESCENDING order
+//
 void menu_printSortedData(HashTable* hashPtr) {
 	rb** rbPtr = hashPtr->return_all();
 	int total = hashPtr->total_items();
@@ -370,6 +390,16 @@ void menu_printSortedData(HashTable* hashPtr) {
 	return;
 }
 
+//--------------------------------------------------------------
+//						menu_printTree								
+//--------------------------------------------------------------
+//	in:		hashTable* to hashTable obj
+//	out:	n/a
+//
+//	Prints indented tree by creating an AVL based on a KEY
+//	Currently only 3 keys - name, pts, pts per game
+//	Prints using AVL display function
+//
 void menu_printTree(HashTable* hashPtr) {
 	rb** rbPtr = hashPtr->return_all();
 	int total = hashPtr->total_items();
@@ -431,7 +461,17 @@ void menu_printTree(HashTable* hashPtr) {
 	}
 }
 
+//--------------------------------------------------------------
+//						menu_printEfficiency								
+//--------------------------------------------------------------
+//	in:		hashTable* to hashTable obj
+//	out:	n/a
+//
+//	Prints various efficiency statistics for Hash
+//
 void menu_printEfficiency(HashTable* hashPtr) {
+	system("CLS");
+	
 	cout << "Hash Statistics: " << endl;
 
 	int hash_total = hashPtr->total_items();
@@ -446,12 +486,23 @@ void menu_printEfficiency(HashTable* hashPtr) {
 	}
 	
 	cout << "Longest list: " << "Index " << max_idx + 1 << " in the hash table with " << hashPtr->numItemsAtIndex(max_idx) << " items" << endl;
-	cout << "AVL Statistics: " << endl;
 
 	system("pause");
 }
 
+//--------------------------------------------------------------
+//						menu_compare								
+//--------------------------------------------------------------
+//	in:		hashTable* to hashTable obj
+//	out:	n/a
+//
+//	Asks user input for names of two players
+//	If found, outputs both players and highlights which player has
+//	better stats
+//
 void menu_compare(HashTable* hashPtr) {
+	system("CLS");
+	
 	rb* player1;
 	rb* player2;
 
@@ -491,11 +542,17 @@ void menu_compare(HashTable* hashPtr) {
 	std::cout << std::setw(6); colorchange(player2->get_ppg(), player1->get_ppg());
 	std::cout << white << std::endl;
 
-
 	system("pause");
 }
 
-
+//--------------------------------------------------------------
+//						menu_save								
+//--------------------------------------------------------------
+//	in:		hashTable* to hashTable obj
+//	out:	n/a
+//
+//	Saves contents of the database to a savefile
+//
 void menu_save(HashTable* hashPtr) {
 	rb** rbPtr = hashPtr->return_all();
 	int total = hashPtr->total_items();
@@ -512,56 +569,72 @@ void menu_save(HashTable* hashPtr) {
 	print_title(out);
 	avlPtr->rsaveInOrder(avlPtr->get_root(), out, count);
 
+	out.close();
 	delete avlPtr;
 	// system("pause");
 	return;
 }
 
-
-
+//--------------------------------------------------------------
+//						menu_save								
+//--------------------------------------------------------------
+//	in:		n/a
+//	out:	n/a
+//
+//	Prints header for output file and list sorted data menu option
+//
 void print_title() {
-
 	std::cout << std::left << std::setw(20) << "Name" << std::setw(4) << "tm" << std::setw(4) << "GP" << std::setw(4) << "RuA" << std::setw(7) << "RuY" << std::setw(5) << "Rutd" << std::setw(4) << "tar" << std::setw(4) << "Rc" << std::setw(4) << "RcY" << std::setw(5) << "RcTD" << std::setw(8) << "pts" << std::setw(6) << "p/g" << std::endl;
-
 }
 
-
+//--------------------------------------------------------------
+//						print_title								
+//--------------------------------------------------------------
+//	in:		output stream
+//	out:	n/a
+//
+//	Prints header for output file and list sorted data menu option
+//
 void print_title(ostream & out) {
-
 	out << std::left << std::setw(4) << "No " << std::setw(20) << "Name" << std::setw(4) << "tm" << std::setw(4) << "GP" << std::setw(4) << "RuA" << std::setw(7) << "RuY" << std::setw(5) << "Rutd" << std::setw(4) << "tar" << std::setw(4) << "Rc" << std::setw(4) << "RcY" << std::setw(5) << "RcTD" << std::setw(8) << "pts" << std::setw(6) << "p/g" << std::endl;
-
 }
 
-void colorchange(double d1, double d2)
-{
+//--------------------------------------------------------------
+//							color change								
+//--------------------------------------------------------------
+//	in:		two doubles to be compared
+//	out:	n/a
+//
+//	Prints the higher value as red
+//
+void colorchange(double d1, double d2) {
 	if (d1 >= d2)cout << red << d1;
 	else cout << white << d1;
 }
 
-void value_intinput(int &i){
-	while (i < 0){
-		cout << "invalue inpput, the value will not be less then zero." << endl << " Please input the correct value :";
+//--------------------------------------------------------------
+//				various input checking functions								
+//--------------------------------------------------------------
+void value_intinput(int &i) {
+	while (i < 0) {
+		cout << "Invalid input, the value cannot be less then zero." << endl << " Please input a correct value : ";
 		cin >> i;
 	}
 }
-void value_douinput(double &d){
 
+void value_douinput(double &d) {
 	while (d < 0){
-		cout << "invalue inpput, the value will not be less then zero."<<endl<<" Please input the correct value :";
+		cout << "Invalid input, the value cannot be less then zero." << endl << " Please input a correct value : ";
 		cin >> d;
 	}
-
 }
+
 void value_team(string &s){
 
 	while (s.length() != 3){
-
-		cout << "your team name doesn't match the formet" << endl << "please input 3-letter abbreviation for the player's team: ";
+		cout << "Team doesn't match the format" << endl << "please input 3-letter abbreviation for the player's team: ";
 		cin >> s;
-
 	}
+
 	return;
-
-
-
 }
