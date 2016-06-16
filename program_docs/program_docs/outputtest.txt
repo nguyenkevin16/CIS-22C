@@ -49,5 +49,3 @@ No  Name                tm  GP  RuA RuY    Rutd tar Rc  RcY RcTD pts     p/g
 48. Dion Lewis          NE  7   49  234     2   50  36  388  2   86.2    12.3  
 49. Jamaal Charles      KC  5   71  364     4   30  21  177  1   84.1    16.8  
 50. Joique Bell         DET 13  90  311     4   27  22  286  0   83.7    6.4   
-51. Johnny              oak 0   0   0       0   0   0   0    0   0       0     
-52. kevin               oak 0   0   0       0   0   0   0    0   0       0     

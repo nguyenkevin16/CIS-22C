@@ -1,6 +1,5 @@
 //
-//  main.cpp
-//  HashTable
+//  HashTable.cpp
 //
 //  Created by Minting Ye on 5/17/16.
 //  Copyright © 2016 Minting Ye. All rights reserved.

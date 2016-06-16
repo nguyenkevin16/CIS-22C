@@ -1,10 +1,12 @@
 //		
-//		node.h
+//		binarynode.h
 //		
+//		Team 4
+//
 //		Kevin Nguyen
 //		Ka U Ieong
-//
-//		Copyright 2016
+//		Bret Farley
+//		Minting Ye
 //
 //		Template class node with 3 data members: data, left pointer, and right pointer
 //		Data can be any native or non-native itemtype
@@ -41,22 +43,22 @@ class node {
 		int numChild() const;
 };
 
-
-//		isLeaf
+//--------------------------------------------------------------
+//						isLeaf								
+//--------------------------------------------------------------
 //	in:		n/a
 //	out:	true if this node is a leaf (no children); false if it has children
-//
 template <typename ItemType>
 bool node<ItemType>::isLeaf() const {
 	if (left == nullptr && right == nullptr && data != nullptr) return true;
 	else return false;
 }
 
-
-//		numChild
+//--------------------------------------------------------------
+//						numChild								
+//--------------------------------------------------------------
 //	in:		n/a
 //	out:	int for how many direct children this node has (only 1 level)
-//
 template <typename ItemType>
 int node<ItemType>::numChild() const {
 	int num;

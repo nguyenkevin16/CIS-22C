@@ -46,8 +46,5 @@
     <Text Include="RB_stats_2015.txt">
       <Filter>Resource Files</Filter>
     </Text>
-    <Text Include="RB_add.txt">
-      <Filter>Resource Files</Filter>
-    </Text>
   </ItemGroup>
 </Project>

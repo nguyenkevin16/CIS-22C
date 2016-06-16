@@ -77,33 +77,12 @@ public:
 	void set_RuY(const double& d) { rush_yards = d; }
 	void set_RcY(const double& d) { rec_yards = d; }
 
-	// METHODS
-	/*
-	std::ostream& operator<<(std::ostream& out, const rb& obj) {
-		out << obj.name << " "
-			<< obj.team << " "
-			<< obj.games_played
-			<< obj.rush_att << " "
-			<< obj.rush_yards << " "
-			<< obj.rush_td << " "
-			<< obj.targets << " "
-			<< obj.receptions << " "
-			<< obj.rec_yards << " "
-			<< obj.rec_td << " "
-			<< obj.points << " "
-			<< obj.points << " "
-			<< obj.points_per_game;
 
-		return out;
-	}
-	*/
-
-	void save_player(std::ostream& out)
-	{
+	void save_player(std::ostream& out) {
 		out << std::left << std::setw(20) << this->get_name() << std::setw(4) << this->get_team() << std::setw(4) << this->get_gp() << std::setw(4) << this->get_attempts() << std::setw(8) << this->get_RuY() << std::setw(4) << this->get_RuTD() << std::setw(4) << this->get_tar() << std::setw(4) << this->get_rec() << std::setw(5) << this->get_RcY() << std::setw(4) << this->get_RcTD() << std::setw(8) << this->get_pts() << std::setw(6) << this->get_ppg() << std::endl;
 	}
 
-	void print_rb(){
+	void print_rb() {
 		std::cout << std::left << std::setw(20) << get_name() << std::setw(4) << get_team() << std::setw(4) << get_gp() << std::setw(4) << get_attempts() << std::setw(8) << get_RuY() << std::setw(4) << get_RuTD() << std::setw(4) << get_tar() << std::setw(4) << get_rec() << std::setw(5) << get_RcY() << std::setw(4) << get_RcTD() << std::setw(8) << get_pts() << std::setw(6) << get_ppg() << std::endl;
 	};
 
@@ -113,7 +92,7 @@ public:
 		return out;
 	};
 
-	void print_simple(){
+	void print_simple() {
 
 		std::cout << std::left << std::setw(22) << get_name() << std::setw(10) << get_team() << std::setw(10) << get_pts() << std::setw(10) << get_ppg() << std::endl;
 	}

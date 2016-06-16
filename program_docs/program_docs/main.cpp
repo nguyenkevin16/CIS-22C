@@ -1,15 +1,19 @@
-/*
-	Team 4
-	Kevin Nguyen
-	Ka U Ieong
-	Bret Farley
-	Minting Ye
-
-	To-Do:
-	MENU_ADD
-	COMPARE
-	EFFICIENCY - clean up
-*/
+//		
+//		main.cpp
+//		
+//		Team 4
+//
+//		Kevin Nguyen
+//		Ka U Ieong
+//		Bret Farley
+//		Minting Ye
+//
+//		Main holds all menu functions
+//		Purpose of this program is to provide an interactive ranking
+//		database of various NFL players. Currently, only running backs
+//		are implemented. Future expansion may see databases on other
+//		positions and additional advanced statistics.
+//
 
 #include <iostream>
 #include <fstream>
@@ -37,18 +41,15 @@ void menu_compare(HashTable* hashPtr);
 void print_title(ostream & out);
 void print_title();
 
-//--------------------------
-//			MAIN
-//--------------------------
+//--------------------------------------------------------------
+//								MAIN								
+//--------------------------------------------------------------
 int main() {
 
-	enableDebug(true);
+	enableDebug(true);		// Utilized to check for memory leaks
 
 	HashTable* hashPtr = new HashTable;
 	rb_list obj_list;
-
-	// obj_list.read_file("RB_stats_2015.txt");
-	// for (int i = 0; i < 50; i++) hashPtr->addItem(obj_list.get_item(i));
 
 	menu_controller(hashPtr, obj_list);
 
@@ -58,11 +59,14 @@ int main() {
 	return 0;
 }
 
-//--------------------------
-//		   Functions
-//--------------------------
-void enableDebug(bool bvalue)
-{
+//--------------------------------------------------------------
+//							enableDebug								
+//--------------------------------------------------------------
+//	in:		bool value
+//	out:	n/a
+//
+//	Utilized to check for memory leaks. Commented out in the main()
+void enableDebug(bool bvalue) {
 	if (!bvalue) return;
 
 	int tmpFlag = _CrtSetDbgFlag(_CRTDBG_REPORT_FLAG);
@@ -77,13 +81,20 @@ void enableDebug(bool bvalue)
 	_CrtSetDbgFlag(tmpFlag);
 }
 
-
+//--------------------------------------------------------------
+//							menu_conroller								
+//--------------------------------------------------------------
+//	in:		hashTable* to hashTable obj; reference to list of 100 rb*
+//	out:	n/a
+//
+//	Main menu controller; Currently has 10 options
 void menu_controller(HashTable* hashPtr, rb_list& obj_list) {
 	string choice;
 
 	while (choice != "10") {
 		system("CLS");
 
+		// Menu display
 		cout << "-------Main Menu-------" << endl;
 		cout << "1. Add new data        " << endl;
 		cout << "2. Delete data         " << endl;
@@ -97,40 +108,50 @@ void menu_controller(HashTable* hashPtr, rb_list& obj_list) {
 		cout << "10. Exit               " << endl;
 		cout << "-----------------------" << endl;
 
+		// Get selection from user
 		do {
 			cout << "Enter a choice: ";
 			cin >> choice;
-
 		} while (!isdigit(choice[0]));
 
+		// Based on selection, call various menu functions
 		switch (stoi(choice)) {
-		case 1:
-			menu_add(hashPtr, obj_list); break;
-		case 2:
-			menu_delete(hashPtr); break;
-		case 3:
-			menu_find(hashPtr); break;
-		case 4:
-			menu_printHash(hashPtr); break;
-		case 5:
-			menu_printSortedData(hashPtr); break;
-		case 6:
-			menu_printTree(hashPtr); break;
-		case 7:
-			menu_printEfficiency(hashPtr); break;
-		case 8:
-			menu_compare(hashPtr); break;
-		case 9:
-			menu_save(hashPtr); break;
-		case 10:
-			cout << "Now exiting..." << endl; 
-			menu_save(hashPtr); break;
-		default:
-			break;
+			case 1:
+				menu_add(hashPtr, obj_list); break;
+			case 2:
+				menu_delete(hashPtr); break;
+			case 3:
+				menu_find(hashPtr); break;
+			case 4:
+				menu_printHash(hashPtr); break;
+			case 5:
+				menu_printSortedData(hashPtr); break;
+			case 6:
+				menu_printTree(hashPtr); break;
+			case 7:
+				menu_printEfficiency(hashPtr); break;
+			case 8:
+				menu_compare(hashPtr); break;
+			case 9:
+				menu_save(hashPtr); break;
+			case 10:
+				cout << "Now exiting..." << endl; 
+				menu_save(hashPtr); break;
+			default:
+				break;
 		}
 	}
 }
 
+//--------------------------------------------------------------
+//							menu_add								
+//--------------------------------------------------------------
+//	in:		hashTable* to hashTable obj; reference to list of 100 rb*
+//	out:	n/a
+//
+//	Add functionality - currently 3 options
+//	
+//
 void menu_add(HashTable* hashPtr, rb_list& obj_list) {
 	system("CLS");
 	
@@ -226,21 +247,27 @@ void menu_add(HashTable* hashPtr, rb_list& obj_list) {
 void menu_delete(HashTable* hashPtr) {
 	string name;
 
+	system("CLS");
+
 	cout << "Enter the name of the player you wish to remove: ";
 	cin.ignore();
 	getline(cin, name);
 
 	if (hashPtr->find(name) != nullptr) {
 		hashPtr->removeItem(name);
+		cout << "Removed " << name << endl;
 	} else {
 		cout << "Could not find the player." << endl;
 	}
 
 	system("pause");
+	return;
 }
 
 void menu_find(HashTable* hashPtr) {
 	string name;
+
+	system("CLS");
 
 	cout << "Please enter the name of the player: ";
 	cin.ignore();
@@ -253,13 +280,16 @@ void menu_find(HashTable* hashPtr) {
 	}
 
 	system("pause");
+	return;
 }
 
 void menu_printHash(HashTable* hashPtr) {
 	system("CLS");
 
 	hashPtr->print_all();
+
 	system("pause");
+	return;
 }
 
 void menu_printSortedData(HashTable* hashPtr) {
