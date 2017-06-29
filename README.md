@@ -5,3 +5,4 @@ The fantasy football spreadsheet CLI is a command-line program written completel
 It allows the user spreadsheet file I/O, sorting, searching, and presentation features.
 
 ![welcome-sceenshot](./docs/presentation/Slide02.jpg)
+![welcome2-screenshot](./docs/presentation/Slide03.jpg)
