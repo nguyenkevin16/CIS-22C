@@ -2,6 +2,8 @@
 An exploration of data abstraction and structures by creating a database to store, search, and sort players quickly.
 A command-line program written completely in C++.
 
+[Program Instructions](./docs/demo_manual.pdf)
+
 ![welcome-img](./docs/images/Slide02.jpg)
 
 ## Roles
@@ -40,7 +42,5 @@ A command-line program written completely in C++.
 ![dsd](./docs/images/data_structures_diag.jpg)
 
 ## Extras
-
-[Program Demonstration](./docs/demo_manual.pdf)
 
 [Docs](./docs)
