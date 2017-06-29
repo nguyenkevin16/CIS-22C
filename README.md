@@ -1,10 +1,6 @@
 # Fantasy Football Spreadsheet CLI
-> An exploration of Data Abstraction and Structures.
-
-The fantasy football spreadsheet CLI is a command-line program written completely in C++.
-It allows the user spreadsheet file I/O, sorting, searching, and presentation features.
-
-> Purpose: database to store, search, and sort players quickly.
+> An exploration of data abstraction and structures by creating a database to store, search, and sort players quickly.
+> A command-line program written completely in C++.
 
 ## Roles
 
@@ -14,10 +10,12 @@ Kevin – Team Lead/BST
   - BST coding
   - Assist HASH coding
   - Create Test Demonstration
+
 Johnny – I/O
   - File input/output
   - User input/output
   - Program Integration
+
 Minting – HASH
   - Code hash table
   - Create DSD and structure chart
